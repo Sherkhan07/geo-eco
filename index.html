@@ -336,6 +336,49 @@ table.calc th{position:relative}
 .bar span:first-child{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .empty-note{margin:0;padding:14px;border-radius:12px;border:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
 @media (max-width:900px){.lab{grid-template-columns:minmax(0,1fr)}}
+/* views, tabs, compact lists */
+.tabs{display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--surface);border:1px solid var(--line);overflow-x:auto;max-width:100%;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;white-space:nowrap;padding:8px 14px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600;color:var(--ink-2)}
+.tabs a:hover{color:var(--ink)}
+.tabs a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+.tabs .ts{display:none}
+@media (max-width:820px){.nav{flex-wrap:wrap}.tabs{order:3;width:100%;display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between}}
+@media (max-width:520px){.tabs .tl{display:none}.tabs .ts{display:inline}.tabs a{padding:8px 11px;font-size:13.5px}}
+.view>.band:first-child{padding-top:clamp(28px,4vw,48px)}
+.hero{padding-bottom:clamp(40px,6vw,72px)}
+.sub{font-size:clamp(17px,1.6vw,20px);margin:clamp(32px,4vw,44px) 0 14px;scroll-margin-top:16px}
+.bank .sub{margin-top:0}
+.blist{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.blist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 20px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.blist li>div{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;min-width:0}
+.bq{font-weight:600;flex-basis:100%}
+.btag{font:600 11px/1.4 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.btag.start{color:var(--leaf)}
+.bact{display:flex;gap:16px;white-space:nowrap}
+@media (max-width:640px){.blist li{grid-template-columns:1fr}}
+.passport{margin-top:0}
+.study1{max-width:860px}
+.labtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.labtabs a{padding:9px 16px;border-radius:999px;border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:14px;color:var(--ink-2);background:var(--surface)}
+.labtabs a[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.lab{grid-template-columns:minmax(0,1fr)!important;max-width:980px}
+.acc{border-top:2px solid var(--ink)}
+.acc details{border-bottom:1px solid var(--line);scroll-margin-top:16px}
+.acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;font:700 clamp(18px,2vw,24px)/1.2 var(--f-display)}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";flex:none;font:500 26px/1 var(--f-mono);color:var(--accent);transition:transform .2s}
+.acc details[open]>summary::after{transform:rotate(45deg)}
+.acc-body{padding-bottom:32px}
+.slist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.slist li{display:grid;gap:2px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.slist b{font-weight:600}
+.slist span{font-size:14px;color:var(--ink-2)}
+.slist em{font-style:normal;font-size:13px;color:var(--leaf)}
+@media (max-width:760px){.slist{grid-template-columns:1fr}}
+.kitrow{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.kitrow li{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:14px}
+.kitrow b{font-family:var(--f-display);margin-right:4px}
 /* traffic counter */
 .tool.wide{grid-column:1/-1}
 .tc-top{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr) auto auto;gap:12px;align-items:end}
@@ -392,20 +435,14 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
     </svg>
     <span>Геоэкология<small>зерттеу платформасы</small></span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#maket">Макет</a></li>
-    <li><a href="#kadamdar">Қадамдар</a></li>
-    <li><a href="#bolimder">Бөлімдер</a></li>
-    <li><a href="#zertteu">Менің зерттеуім</a></li>
-    <li><a href="#zerthana">Зертхана</a></li>
-    <li><a href="#synyptar">Сыныптар</a></li>
-    <li><a href="#zhobalar">Жобалар</a></li>
-    <li><a href="#bastau">Бастау</a></li>
-  </ul>
+  <nav class="tabs" aria-label="Бөлімдер">
+    <a href="#maket" data-view="view-maket">Макет</a><a href="#zertteu" data-view="view-zertteu"><span class="tl">Менің зерттеуім</span><span class="ts">Зерттеу</span></a><a href="#zerthana" data-view="view-zerthana">Зертхана</a><a href="#turaly" data-view="view-turaly"><span class="tl">Платформа туралы</span><span class="ts">Туралы</span></a>
+  </nav>
 </header>
 
 <main>
-<section class="hero">
+<div class="view" id="view-maket">
+<section class="hero" id="maket">
   <div class="wrap">
     <div class="hero-head">
       <div class="tq">
@@ -414,12 +451,12 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
       </div>
       <div class="hero-side">
         <p class="lead">Оқушы жергілікті экологиялық мәселені зерттеуді, нақты деректерді талдауды және дәлелді шешім ұсынуды үйренеді. Нәтижесі карта, инфографика, зерттеу есебі немесе модель түрінде ұсынылады.</p>
-        <div class="cta-row"><a class="btn btn-primary" href="#maket">Макетті зерттеу</a><a class="btn btn-ghost" href="#passport">Жоба паспортын толтыру</a></div>
+        <div class="cta-row"><a class="btn btn-primary" href="#stage">Макетті зерттеу</a><a class="btn btn-ghost" href="#passport">Жоба паспортын толтыру</a></div>
         <ul class="facts"><li><b>8</b> тақырып</li><li><b>11</b> бөлім</li><li><b>7</b> материал әр тақырыпта</li><li><b>4</b> бастапқы жоба</li></ul>
       </div>
     </div>
 
-    <div class="stage" id="maket">
+    <div class="stage" id="stage">
       <div class="stage-view" id="stageView">
         <canvas id="scene" role="img" aria-label="Мектеп ауласының 3D макеті: жол, тоған, мектеп ғимараты, ағаштар, ауа райы бекеті, күн панельдері мен жел турбинасы"></canvas>
         <div class="labels" id="labels"></div>
@@ -449,106 +486,32 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
     </div>
   </div>
 </section>
+</div>
 
-<section class="band" id="kadamdar">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Әр тақырыптың ішінде</p>
-      <h2>Әр тақырып бір ырғақпен жүреді</h2>
-      <p class="lead">Әр тақырыпқа бірдей жеті материал салынады. Олар оқушының жұмыс ретімен төрт қадамға бөлінеді.</p>
-    </div>
-    <ol class="cycle">
-      <li class="step"><span class="step-k">1 / 4</span><span class="step-word">Оқы</span>
-        <ul class="mat">
-          <li><b>Ақпараттық мәтін</b><span class="spec">300–500 сөз</span><span>Негізгі ұғымдар мен мәселенің себеп-салдары.</span></li>
-          <li><b>Көрнекілік</b><span class="spec">фото · сызба · карта</span><span>Түсіндірмесі бар фотосуреттер, сызба немесе карта.</span></li>
-        </ul></li>
-      <li class="step"><span class="step-k">2 / 4</span><span class="step-word">Зертте</span>
-        <ul class="mat">
-          <li><b>Деректер жиынтығы</b><span class="spec">талдауға дайын кесте</span><span>Дереккөзі, орны, мерзімі және өлшем бірлігі көрсетіледі.</span></li>
-          <li><b>Зерттеу нұсқаулығы</b><span class="spec">сұрақ · құрал · қадам</span><span>Жұмыс қадамдары, қауіпсіздік және әдістің шектеулері.</span></li>
-          <li><b>Жұмыс парағы</b><span class="spec">жүктеледі</span><span>Бақылау кестесі, есептеу орны және қорытынды сұрақтары.</span></li>
-        </ul></li>
-      <li class="step"><span class="step-k">3 / 4</span><span class="step-word">Өнім жаса</span>
-        <ul class="mat">
-          <li><b>Шығармашылық тапсырма</b><span class="spec">карта · инфографика · модель</span><span>Бейнетүсіндірме де болады. Өнім үлгісі мен тексеру парағы беріледі.</span></li>
-        </ul></li>
-      <li class="step"><span class="step-k">4 / 4</span><span class="step-word">Бағала</span>
-        <ul class="mat">
-          <li><b>Бағалау парағы</b><span class="spec">4 көрсеткіш</span><span>Деректің дұрыстығы, талдау сапасы, дәлелді қорытынды және ұсыныстың негізділігі.</span></li>
-        </ul></li>
-    </ol>
-    <div class="dq">
-      <div><p class="eyebrow">Дерек сапасы</p><p style="margin-top:8px">Әр кестеде осы төрт белгі көрсетіледі. Бақылау нәтижелері мен дайын деректердің шығу тегі ажыратылып беріледі.</p></div>
-      <div class="dq-row"><span>дереккөз</span><span>жиналған күн</span><span>орын</span><span>өлшем бірлігі</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="band alt" id="bolimder">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Платформа</p>
-      <h2>Платформаның он бір бөлімі</h2>
-      <p class="lead">Мазмұн «Геоэкологиялық зерттеулер негіздері» элективті курсы мен «География» оқу-әдістемелік құралына сәйкестендіріледі. Курс теориялық негізді, ал құрал жұмыс нұсқаулықтары мен тапсырмаларды береді.</p>
-    </div>
-    <div class="sections">
-      <article class="card feature" data-tilt>
-        <p class="eyebrow">Негізгі ерекшелік</p>
-        <h3>Менің геоэкологиялық зерттеуім</h3>
-        <p>Жоба паспорты, жоспар, топ міндеттері, дерек енгізу, күнделік, фото, қорытынды және жұмыс тапсыру орны.</p>
-        <p class="who"><span>Оқушы</span>бір мәселені таңдап, толық зерттеу жүргізеді. <a href="#passport">Паспортты толтыру</a></p>
-      </article>
-      <article class="card" data-tilt><h3>Курс кітапханасы</h3><p>Курс бағдарламасы, 8 тақырыптық мәтін, ұғымдар сөздігі, көрнекіліктер және қысқа бейнетүсіндірмелер.</p><p class="who"><span>Оқушы</span>мәселенің себептері мен салдарын анықтайды</p></article>
-      <article class="card" data-tilt><h3>Жобалар банкі</h3><p>Сынып пен тақырып бойынша зерттеу сұрақтары, жоба тапсырмалары, паспорттар және дайын жұмыс үлгілері.</p><p class="who"><span>Оқушы</span>өзіне қызықты мәселені таңдайды</p></article>
-      <article class="card" data-tilt><h3>Жас зерттеуші</h3><p>Мәселе, мақсат, болжам құру; бақылау, салыстыру, сауалнама, өлшеу және карталау әдістерін таңдау нұсқаулықтары.</p><p class="who"><span>Оқушы</span>зерттеуін кезең-кезеңімен жоспарлайды</p></article>
-      <article class="card" data-tilt><h3>Географиялық деректер зертханасы</h3><p>Карталар, климаттық кестелер, статистика, спутниктік суреттер; дерек талдау, диаграмма және шартты белгі жасау үлгілері.</p><p class="who"><span>Оқушы</span>деректерді салыстырып, заңдылықтарды анықтайды</p></article>
-      <article class="card" data-tilt><h3>Өлкетану және далалық зерттеу</h3><p>Бақылау парақтары, маршрут карталары, өлшеу кестелері, қауіпсіздік ережелері.</p><p class="who"><span>Оқушы</span>өз аумағын бақылап, нақты дерек жинайды</p></article>
-      <article class="card" data-tilt><h3>Шығармашылық шеберхана</h3><p>Карта, инфографика, макет, фотоколлаж, бейнеролик және виртуалды экскурсия жасау нұсқаулықтары мен тексеру парақтары.</p><p class="who"><span>Оқушы</span>зерттеу нәтижесін шығармашылық өнімге айналдырады</p></article>
-      <article class="card" data-tilt><h3>Виртуалды тәжірибелер</h3><p>Су айналымы, эрозия, климат факторлары және қала экологиясы модельдері.</p><p class="who"><span>Оқушы</span>шарттарды өзгертіп, нәтижесін түсіндіреді</p></article>
-      <article class="card" data-tilt><h3>Бағалау және кері байланыс</h3><p>Критерийлер, өзіндік және өзара бағалау, мұғалім пікірі, рефлексия; бастапқы және жетілдірілген жұмыстар портфолиосы.</p><p class="who"><span>Оқушы</span>жұмысын тексеріп, жетілдіреді</p></article>
-      <article class="card" data-tilt><h3>Жобалар галереясы</h3><p>Жариялауға келісім берілген зерттеу есептері, карталар, макеттер, таныстырылымдар және бейнеқорғаулар.</p><p class="who"><span>Оқушы</span>нәтижесін жариялап, басқалардың жұмыстарымен танысады</p></article>
-      <article class="card" data-tilt><h3>Мұғалімге арналған бөлім</h3><p>Жобалық сабақ жоспарлары, тапсырмалар, жұмыс парақтары, бағалау құралдары және жұмысты ұйымдастыру нұсқаулықтары.</p><p class="who"><span>Мұғалім</span>жобалық жұмысты ұйымдастырады</p></article>
-    </div>
-  </div>
-</section>
-
+<div class="view" id="view-zertteu" hidden>
 <section class="band" id="zertteu">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Негізгі ерекшелік</p>
-      <h2>Менің геоэкологиялық зерттеуім</h2>
-      <p class="lead">Оқушы бір мәселені таңдап, оны басынан соңына дейін зерттейді. Төменде мектеп ауласындағы жасыл желек пен температураны зерттеу жолы, өлшеу кестесі және өз жобаңның паспорты бар.</p>
+      <p class="eyebrow">Менің геоэкологиялық зерттеуім</p>
+      <h2>Жобаңды таңда, зертте, тапсыр</h2>
+      <p class="lead">Банктен бір сұрақ таңда, жоба паспортын қадам-қадаммен толтыр, өлшемдерді енгіз. Жазғаның осы браузерде сақталады.</p>
     </div>
-    <div class="study">
-      <ol class="route">
-        <li><b>Мәселе</b><span>Мектеп ауласында көлеңкелі орындар жеткілікті ме?</span></li>
-        <li><b>Зерттеу сұрағы</b><span>Жасыл желек ауладағы температураға қалай байланысты?</span></li>
-        <li><b>Жоспар</b><span>Өлшеу нүктелерін, уақытын, құралдарын және топ мүшелерінің міндеттерін белгілеу.</span></li>
-        <li><b>Дерек жинау</b><span>Күн түсетін және көлеңкелі бірнеше нүктеде температураны бір уақытта, бірдей тәсілмен тіркеу.</span></li>
-        <li><b>Талдау</b><span>Нәтижелерді кестеге енгізу, диаграмма мен микроклимат картасын жасау.</span></li>
-        <li><b>Шешім</b><span>Деректерге сүйеніп көгалдандыру сызбасын әзірлеу.</span></li>
-        <li><b>Қорғау және жетілдіру</b><span>Дәлелдер мен әдістің шектеулерін түсіндіру, кері байланыс негізінде ұсынысты толықтыру.</span></li>
-      </ol>
-      <div class="datacard">
-        <div class="dc-head"><div><p class="eyebrow">Дерек жинау → талдау</p><h3>Бес нүктедегі температура</h3></div><span class="badge">Өз өлшемің</span></div>
-        <p class="dc-note">Бес нүктеде температураны бір уақытта, бірдей тәсілмен өлше де, нәтижені енгіз. Диаграмма, талдау және 3D жылу картасы осы мәндерден құрылады.</p>
-        <div class="meta-grid">
-          <label for="mDate">Күні<input id="mDate" type="date"></label>
-          <label for="mTime">Уақыты<input id="mTime" type="time"></label>
-          <label for="mTool">Құрал<input id="mTool" type="text" placeholder="мысалы, сандық термометр"></label>
-        </div>
-        <div class="table-wrap"><table>
-          <thead><tr><th>Нүкте</th><th>Орны</th><th>°C</th></tr></thead>
-          <tbody id="dataBody"></tbody>
-        </table></div>
-        <p class="dc-meta">Дереккөз: өз бақылауың · Өлшем бірлігі: °C · Жазғаның осы браузерде сақталады</p>
-        <div class="plot" id="plot" aria-hidden="true"></div>
-        <p class="psum" id="psum"></p>
-        <div class="dc-actions"><button type="button" class="btn btn-primary" data-thermal-go>3D макетте жылу картасын көру</button><button type="button" class="btn btn-ghost" id="resetData">Кестені тазалау</button></div>
-      </div>
+    <div class="bank">
+      <h3 class="sub">1. Жобаны таңда</h3>
+      <ul class="blist">
+        <li><div><span class="bq">Мектеп ауласын қалай көгалдандыруға болады?</span><span class="btag">Тақырып 6 · Жасыл желек</span><span class="btag start">Бастапқы жоба: «Мектептің жасыл паспорты»</span></div><span class="bact"><a class="link-btn" href="#green">Құралды ашу</a><button type="button" class="link-btn" data-show="6">Макетте</button></span></li>
+        <li><div><span class="bq">Мектеп маңындағы көлік ағыны және қоршаған орта</span><span class="btag">Тақырып 1 · Ауа және көлік</span></div><span class="bact"><a class="link-btn" href="#traffic">Құралды ашу</a><button type="button" class="link-btn" data-show="1">Макетте</button></span></li>
+        <li><div><span class="bq">Отбасымыз бір тәулікте қанша су тұтынады?</span><span class="btag">Тақырып 2 · Су</span><span class="btag start">Бастапқы жоба: «Суды үнемдейік»</span></div><span class="bact"><a class="link-btn" href="#water">Құралды ашу</a><button type="button" class="link-btn" data-show="2">Макетте</button></span></li>
+        <li><div><span class="bq">Ауданымыздағы қоқыс жиналатын орындардың картасы</span><span class="btag">Тақырып 3 · Қалдықтар</span><span class="btag start">Бастапқы жоба: «Сынып қалдықтары»</span></div><span class="bact"><a class="link-btn" href="#waste">Құралды ашу</a><button type="button" class="link-btn" data-show="3">Макетте</button></span></li>
+        <li><div><span class="bq">Мектеп ауласындағы жылы және салқын орындар</span><span class="btag">Тақырып 4 · Микроклимат</span><span class="btag start">Бастапқы жоба: «Ауланың жылы және салқын нүктелері»</span></div><span class="bact"><a class="link-btn" href="#olshem">Құралды ашу</a><button type="button" class="link-btn" data-show="4">Макетте</button></span></li>
+        <li><div><span class="bq">Жергілікті туристік маршрут құрастыру</span><span class="btag">Өлкетану</span></div><span class="bact"></span></li>
+        <li><div><span class="bq">Болашақтың экологиялық қаласы</span><span class="btag">Шығармашылық модельдеу</span></div><span class="bact"></span></li>
+        <li><div><span class="bq">Марстағы адам өміріне қолайлы мекен моделі</span><span class="btag">Шығармашылық модельдеу</span></div><span class="bact"></span></li>
+      </ul>
+      <p class="dc-meta">Шығармашылық модельдеу жобаларында өлшенген дерек, дайын ақпарат және модельдегі болжам бөлек көрсетіледі.</p>
     </div>
 
+    <h3 class="sub">2. Паспортты толтыр</h3>
     <div class="passport" id="passport">
       <div class="pp-head">
         <div><p class="eyebrow">Менің жобам</p><h3>Жоба паспорты</h3></div>
@@ -568,15 +531,41 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
       </div>
       <p class="dc-meta">Жазғаның осы браузерде сақталады. Мұғалімге тапсыру үшін көшіріп, құжатқа немесе хатқа қой.</p>
     </div>
+
+    <h3 class="sub" id="olshem">3. Микроклимат өлшемдері</h3>
+    <div class="study1">
+      <div class="datacard">
+        <div class="dc-head"><div><p class="eyebrow">Дерек жинау → талдау</p><h3>Бес нүктедегі температура</h3></div><span class="badge">Өз өлшемің</span></div>
+        <p class="dc-note">Бес нүктеде температураны бір уақытта, бірдей тәсілмен өлше де, нәтижені енгіз. Диаграмма, талдау және 3D жылу картасы осы мәндерден құрылады.</p>
+        <div class="meta-grid">
+          <label for="mDate">Күні<input id="mDate" type="date"></label>
+          <label for="mTime">Уақыты<input id="mTime" type="time"></label>
+          <label for="mTool">Құрал<input id="mTool" type="text" placeholder="мысалы, сандық термометр"></label>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Нүкте</th><th>Орны</th><th>°C</th></tr></thead>
+          <tbody id="dataBody"></tbody>
+        </table></div>
+        <p class="dc-meta">Дереккөз: өз бақылауың · Өлшем бірлігі: °C · Жазғаның осы браузерде сақталады</p>
+        <div class="plot" id="plot" aria-hidden="true"></div>
+        <p class="psum" id="psum"></p>
+        <div class="dc-actions"><button type="button" class="btn btn-primary" data-thermal-go>3D макетте жылу картасын көру</button><button type="button" class="btn btn-ghost" id="resetData">Кестені тазалау</button></div>
+      </div>
+    </div>
   </div>
 </section>
+</div>
 
-<section class="band alt" id="zerthana">
+<div class="view" id="view-zerthana" hidden>
+<section class="band" id="zerthana">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Географиялық деректер зертханасы</p>
       <h2>Өз дерегіңді есепте</h2>
-      <p class="lead">Бес құрал бастапқы жобаларға, көлік және энергия тақырыптарына арналған. Сандарды өзің жинайсың, ал зертхана есептеп, диаграмма салады.</p>
+      <p class="lead">Сандарды өзің жинайсың, ал зертхана есептеп, диаграмма салады. Құралды төмендегі қойындыдан таңда.</p>
+    </div>
+    <div class="labtabs" role="tablist" aria-label="Зертхана құралдары">
+      <a href="#water" data-tool="water">Су</a><a href="#waste" data-tool="waste">Қалдықтар</a><a href="#green" data-tool="green">Жасыл паспорт</a><a href="#traffic" data-tool="traffic">Көлік санағышы</a><a href="#energy" data-tool="energy">Энергия</a>
     </div>
     <div class="lab">
       <div class="tool" id="water">
@@ -639,91 +628,86 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
     </div>
   </div>
 </section>
+</div>
 
-<section class="band" id="synyptar">
+<div class="view" id="view-turaly" hidden>
+<section class="band" id="turaly">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Сыныптарға бейімдеу</p>
-      <h2>Бір тақырып, үш тереңдік</h2>
-      <p class="lead">Тақырыптар барлық сыныпқа ортақ. Зерттеу ауқымы, деректерді өңдеу тәсілі және қорытындыға қойылатын талап сынып деңгейіне қарай күрделенеді.</p>
+      <p class="eyebrow">Платформа туралы</p>
+      <h2>Тұжырымдама</h2>
+      <p class="lead">Мазмұн «Геоэкологиялық зерттеулер негіздері» элективті курсы мен «География» оқу-әдістемелік құралына сәйкестендіріледі. Курс теориялық негізді, ал құрал жұмыс нұсқаулықтары мен тапсырмаларды береді.</p>
     </div>
+    <div class="acc">
+      <details open id="kadamdar"><summary>Әр тақырыптың төрт қадамы</summary><div class="acc-body">
+        <p class="lead" style="margin-bottom:20px">Әр тақырыпқа бірдей жеті материал салынады. Олар оқушының жұмыс ретімен төрт қадамға бөлінеді.</p>
+    <ol class="cycle">
+      <li class="step"><span class="step-k">1 / 4</span><span class="step-word">Оқы</span>
+        <ul class="mat">
+          <li><b>Ақпараттық мәтін</b><span class="spec">300–500 сөз</span><span>Негізгі ұғымдар мен мәселенің себеп-салдары.</span></li>
+          <li><b>Көрнекілік</b><span class="spec">фото · сызба · карта</span><span>Түсіндірмесі бар фотосуреттер, сызба немесе карта.</span></li>
+        </ul></li>
+      <li class="step"><span class="step-k">2 / 4</span><span class="step-word">Зертте</span>
+        <ul class="mat">
+          <li><b>Деректер жиынтығы</b><span class="spec">талдауға дайын кесте</span><span>Дереккөзі, орны, мерзімі және өлшем бірлігі көрсетіледі.</span></li>
+          <li><b>Зерттеу нұсқаулығы</b><span class="spec">сұрақ · құрал · қадам</span><span>Жұмыс қадамдары, қауіпсіздік және әдістің шектеулері.</span></li>
+          <li><b>Жұмыс парағы</b><span class="spec">жүктеледі</span><span>Бақылау кестесі, есептеу орны және қорытынды сұрақтары.</span></li>
+        </ul></li>
+      <li class="step"><span class="step-k">3 / 4</span><span class="step-word">Өнім жаса</span>
+        <ul class="mat">
+          <li><b>Шығармашылық тапсырма</b><span class="spec">карта · инфографика · модель</span><span>Бейнетүсіндірме де болады. Өнім үлгісі мен тексеру парағы беріледі.</span></li>
+        </ul></li>
+      <li class="step"><span class="step-k">4 / 4</span><span class="step-word">Бағала</span>
+        <ul class="mat">
+          <li><b>Бағалау парағы</b><span class="spec">4 көрсеткіш</span><span>Деректің дұрыстығы, талдау сапасы, дәлелді қорытынды және ұсыныстың негізділігі.</span></li>
+        </ul></li>
+    </ol>
+    <div class="dq">
+      <div><p class="eyebrow">Дерек сапасы</p><p style="margin-top:8px">Әр кестеде осы төрт белгі көрсетіледі. Бақылау нәтижелері мен дайын деректердің шығу тегі ажыратылып беріледі.</p></div>
+      <div class="dq-row"><span>дереккөз</span><span>жиналған күн</span><span>орын</span><span>өлшем бірлігі</span></div>
+    </div>
+      </div></details>
+      <details id="bolimder"><summary>Платформаның 11 бөлімі</summary><div class="acc-body">
+        <ul class="slist">
+        <li><b>Менің геоэкологиялық зерттеуім</b><span>Жоба паспорты, жоспар, топ міндеттері, дерек енгізу, күнделік, фото, қорытынды және жұмыс тапсыру орны.</span><em>Оқушы: бір мәселені таңдап, толық зерттеу жүргізеді</em></li>
+        <li><b>Курс кітапханасы</b><span>Курс бағдарламасы, 8 тақырыптық мәтін, ұғымдар сөздігі, көрнекіліктер және қысқа бейнетүсіндірмелер.</span><em>Оқушы: мәселенің себептері мен салдарын анықтайды</em></li>
+        <li><b>Жобалар банкі</b><span>Сынып пен тақырып бойынша зерттеу сұрақтары, жоба тапсырмалары, паспорттар және дайын жұмыс үлгілері.</span><em>Оқушы: өзіне қызықты мәселені таңдайды</em></li>
+        <li><b>Жас зерттеуші</b><span>Мәселе, мақсат, болжам құру; бақылау, салыстыру, сауалнама, өлшеу және карталау әдістерін таңдау нұсқаулықтары.</span><em>Оқушы: зерттеуін кезең-кезеңімен жоспарлайды</em></li>
+        <li><b>Географиялық деректер зертханасы</b><span>Карталар, климаттық кестелер, статистика, спутниктік суреттер; дерек талдау, диаграмма және шартты белгі жасау үлгілері.</span><em>Оқушы: деректерді салыстырып, заңдылықтарды анықтайды</em></li>
+        <li><b>Өлкетану және далалық зерттеу</b><span>Бақылау парақтары, маршрут карталары, өлшеу кестелері, қауіпсіздік ережелері.</span><em>Оқушы: өз аумағын бақылап, нақты дерек жинайды</em></li>
+        <li><b>Шығармашылық шеберхана</b><span>Карта, инфографика, макет, фотоколлаж, бейнеролик және виртуалды экскурсия жасау нұсқаулықтары мен тексеру парақтары.</span><em>Оқушы: зерттеу нәтижесін шығармашылық өнімге айналдырады</em></li>
+        <li><b>Виртуалды тәжірибелер</b><span>Су айналымы, эрозия, климат факторлары және қала экологиясы модельдері.</span><em>Оқушы: шарттарды өзгертіп, нәтижесін түсіндіреді</em></li>
+        <li><b>Бағалау және кері байланыс</b><span>Критерийлер, өзіндік және өзара бағалау, мұғалім пікірі, рефлексия; бастапқы және жетілдірілген жұмыстар портфолиосы.</span><em>Оқушы: жұмысын тексеріп, жетілдіреді</em></li>
+        <li><b>Жобалар галереясы</b><span>Жариялауға келісім берілген зерттеу есептері, карталар, макеттер, таныстырылымдар және бейнеқорғаулар.</span><em>Оқушы: нәтижесін жариялап, басқалардың жұмыстарымен танысады</em></li>
+        <li><b>Мұғалімге арналған бөлім</b><span>Жобалық сабақ жоспарлары, тапсырмалар, жұмыс парақтары, бағалау құралдары және жұмысты ұйымдастыру нұсқаулықтары.</span><em>Мұғалім: жобалық жұмысты ұйымдастырады</em></li>
+        </ul>
+      </div></details>
+      <details id="synyptar"><summary>Сыныптарға бейімдеу</summary><div class="acc-body">
+        <p class="lead" style="margin-bottom:20px">Тақырыптар барлық сыныпқа ортақ. Зерттеу ауқымы, деректерді өңдеу тәсілі және қорытындыға қойылатын талап сынып деңгейіне қарай күрделенеді.</p>
     <div class="strata">
       <div class="stratum s0">Мысал тақырып: «Жасыл мектеп»</div>
       <div class="stratum s1"><div><div class="grade">7–8</div><span class="depth">1-қабат · бақылау</span></div><p><span class="k">Тапсырманың деңгейі</span>Бақылау, санау, сипаттау және қарапайым салыстыру.</p><p><span class="k">Мысал</span>Ағаштарды санап, фотосуретке түсіру, картада белгілеу.</p></div>
       <div class="stratum s2"><div><div class="grade">9</div><span class="depth">2-қабат · есептеу</span></div><p><span class="k">Тапсырманың деңгейі</span>Пайыз есептеу, диаграмма құру және себеп-салдарды түсіндіру.</p><p><span class="k">Мысал</span>Ағаш түрлерінің үлесін есептеп, аумақтар арасындағы айырмашылықты түсіндіру.</p></div>
       <div class="stratum s3"><div><div class="grade">10–11</div><span class="depth">3-қабат · негіздеу</span></div><p><span class="k">Тапсырманың деңгейі</span>Әдісті негіздеу, деректерді байланыстыру және шектеулерді бағалау.</p><p><span class="k">Мысал</span>Жасыл желек пен температураны салыстырып, көгалдандыру жобасын негіздеу.</p></div>
     </div>
-  </div>
-</section>
-
-<section class="band alt" id="zhobalar">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Жобалар банкі</p>
-      <h2>Зерттеу сұрағынан бастау</h2>
-      <p class="lead">Әр жобаның беті бірдей құрылыммен беріледі:</p>
-    </div>
-    <ol class="chain">
-      <li><span>Мәселе</span></li><li><span>Зерттеу сұрағы</span></li><li><span>Мақсат</span></li><li><span>Жұмыс жоспары</span></li><li><span>Әдістер</span></li><li><span>Жиналған деректер</span></li><li><span>Шығармашылық өнім</span></li><li><span>Қорытынды</span></li><li><span>Бағалау</span></li>
-    </ol>
-    <p class="chain-note">Оқушы үлгілерді жүктеп алады, өз деректерін енгізеді, күнделік жүргізеді және жұмысын тапсырады. Мұғалім кері байланыс береді, оқушы ұсыныстарды ескеріп, өнімін жетілдіреді.</p>
-    <div class="pgrid">
-      <article class="pcard" data-tilt><p class="ptag">Тақырып 6 · Жасыл желек</p><h3>Мектеп ауласын қалай көгалдандыруға болады?</h3><div class="foot"><button type="button" class="link-btn" data-show="6">Макетте көрсету</button></div></article>
-      <article class="pcard" data-tilt><p class="ptag">Тақырып 1 · Ауа және көлік</p><h3>Мектеп маңындағы көлік ағыны және қоршаған орта</h3><div class="foot"><a class="link-btn" href="#traffic">Құралды ашу</a><button type="button" class="link-btn" data-show="1">Макетте көрсету</button></div></article>
-      <article class="pcard" data-tilt><p class="ptag">Тақырып 2 · Су</p><h3>Отбасымыз бір тәулікте қанша су тұтынады?</h3><div class="foot"><button type="button" class="link-btn" data-show="2">Макетте көрсету</button></div></article>
-      <article class="pcard" data-tilt><p class="ptag">Тақырып 3 · Қалдықтар</p><h3>Ауданымыздағы қоқыс жиналатын орындардың картасы</h3><div class="foot"><button type="button" class="link-btn" data-show="3">Макетте көрсету</button></div></article>
-      <article class="pcard" data-tilt><p class="ptag">Тақырып 4 · Микроклимат</p><h3>Мектеп ауласындағы жылы және салқын орындар</h3><div class="foot"><button type="button" class="link-btn" data-show="4">Макетте көрсету</button></div></article>
-      <article class="pcard" data-tilt><p class="ptag">Өлкетану</p><h3>Жергілікті туристік маршрут құрастыру</h3><div class="foot"><p>Маршрут картасы мен бақылау парақтары</p></div></article>
-      <article class="pcard model" data-tilt><p class="ptag">Шығармашылық модельдеу</p><h3>Болашақтың экологиялық қаласы</h3><div class="foot"><p>Өлшенген дерек, дайын ақпарат және модельдегі болжам бөлек көрсетіледі</p></div></article>
-      <article class="pcard model" data-tilt><p class="ptag">Шығармашылық модельдеу</p><h3>Марстағы адам өміріне қолайлы мекен моделі</h3><div class="foot"><p>Өлшенген дерек, дайын ақпарат және модельдегі болжам бөлек көрсетіледі</p></div></article>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="bagalau">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Бағалау</p>
-      <h2>Екі бағыт бойынша бағаланады</h2>
-    </div>
+      </div></details>
+      <details id="bagalau"><summary>Бағалау</summary><div class="acc-body">
     <div class="eval">
       <div class="ecol"><h3>Зерттеушілік құзыреттілік</h3><ul><li>Сұрақтың нақтылығы</li><li>Әдістің негізділігі</li><li>Дерек жинау мен талдау</li><li>Дәлелді қорытынды</li><li>Дереккөздерді көрсету</li></ul></div>
       <div class="ecol"><h3>Шығармашылық іс-әрекет</h3><ul><li>Идеялардың әртүрлілігі</li><li>Шешімнің өзіндік ерекшелігі</li><li>Бірнеше нұсқа ұсыну</li><li>Өнімді жетілдіру</li></ul></div>
       <div class="loop"><span>Бастапқы жұмыс</span><i>→</i><span>Өзіндік және өзара бағалау</span><i>→</i><span>Мұғалім пікірі</span><i>→</i><span>Жетілдірілген жұмыс</span>
         <small>Екі нұсқа да портфолиода сақталады, оқушы рефлексия жазады.</small></div>
     </div>
+      </div></details>
+      <details id="bastau"><summary>Алғашқы нұсқа</summary><div class="acc-body">
+        <p class="lead">Іске қосу төрт жобадан басталады: «Суды үнемдейік», «Сынып қалдықтары», «Ауланың жылы және салқын нүктелері», «Мектептің жасыл паспорты». Бұл тақырыптар бойынша оқушылар қолжетімді құралдармен нақты дерек жинай алады.</p>
+        <ul class="kitrow"><li><b>8</b> ақпараттық мәтін</li><li><b>4</b> зерттеу тапсырмасы</li><li><b>4</b> деректер кестесі</li><li><b>1</b> зерттеу күнделігі</li><li><b>1</b> бағалау парағы</li><li><b>+</b> жұмыстар галереясы</li></ul>
+        <p class="outcome"><span>Күтілетін нәтиже:</span> оқушы жергілікті мәселе бойынша дерекке сүйенген зерттеу жүргізіп, практикалық ұсынысы бар өнім әзірлейді және оны кері байланыс негізінде жетілдіреді.</p>
+      </div></details>
+    </div>
   </div>
 </section>
-
-<section class="band alt" id="bastau">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Алғашқы нұсқа</p>
-      <h2>Іске қосу төрт жобадан басталады</h2>
-      <p class="lead">Алдымен су, қалдықтар, микроклимат және жасыл желек тақырыптарында дерек жинау мен жұмыс тапсыру жолы іске қосылады. Бұл тақырыптар бойынша оқушылар қолжетімді құралдармен нақты дерек жинай алады.</p>
-    </div>
-    <div class="launch">
-      <div class="lgrid">
-        <article class="pcard" data-tilt><p class="ptag">Тақырып 2</p><h3>«Суды үнемдейік»</h3><div class="foot"><a class="link-btn" href="#water">Құралды ашу</a><button type="button" class="link-btn" data-show="2">Макетте көрсету</button></div></article>
-        <article class="pcard" data-tilt><p class="ptag">Тақырып 3</p><h3>«Сынып қалдықтары»</h3><div class="foot"><a class="link-btn" href="#waste">Құралды ашу</a><button type="button" class="link-btn" data-show="3">Макетте көрсету</button></div></article>
-        <article class="pcard" data-tilt><p class="ptag">Тақырып 4</p><h3>«Ауланың жылы және салқын нүктелері»</h3><div class="foot"><a class="link-btn" href="#zertteu">Құралды ашу</a><button type="button" class="link-btn" data-show="4">Макетте көрсету</button></div></article>
-        <article class="pcard" data-tilt><p class="ptag">Тақырып 6</p><h3>«Мектептің жасыл паспорты»</h3><div class="foot"><a class="link-btn" href="#green">Құралды ашу</a><button type="button" class="link-btn" data-show="6">Макетте көрсету</button></div></article>
-      </div>
-      <div class="kit">
-        <p class="eyebrow">Бастапқы жинақ</p>
-        <ul>
-          <li><b>8</b><span>ақпараттық мәтін</span></li>
-          <li><b>4</b><span>зерттеу тапсырмасы</span></li>
-          <li><b>4</b><span>деректер кестесі</span></li>
-          <li><b>1</b><span>зерттеу күнделігі</span></li>
-          <li><b>1</b><span>бағалау парағы</span></li>
-          <li><b>+</b><span>жұмыстар галереясы</span></li>
-        </ul>
-      </div>
-    </div>
-    <p class="outcome"><span>Күтілетін нәтиже:</span> оқушы жергілікті мәселе бойынша дерекке сүйенген зерттеу жүргізіп, практикалық ұсынысы бар өнім әзірлейді және оны кері байланыс негізінде жетілдіреді.</p>
-  </div>
-</section>
+</div>
 </main>
 
 <footer><div class="wrap"><span>Геоэкологиялық зерттеу платформасының тұжырымдамасы · 7–11-сыныптар</span><span>«Геоэкологиялық зерттеулер негіздері» курсы · «География» оқу-әдістемелік құралы</span></div></footer>
@@ -775,7 +759,7 @@ function rgb(c){return "rgb("+c[0]+","+c[1]+","+c[2]+")"}
 function fmt(v){return v.toFixed(1).replace(".",",")}
 
 /* ---- Panel ---- */
-var TOOLS={1:"#traffic",2:"#water",3:"#waste",4:"#zertteu",6:"#green",7:"#energy"};
+var TOOLS={1:"#traffic",2:"#water",3:"#waste",4:"#olshem",6:"#green",7:"#energy"};
 var panel=$("#panel"), current=null, mode="model", api=null;
 function renderPanel(focus){
   if(current==null){
@@ -803,7 +787,7 @@ function setMode(m){
   $("#legend").hidden=m!=="thermal";if(api)api.setThermal(m==="thermal");
   if(current===4)renderPanel(false);
 }
-function toStage(){$("#maket").scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"})}
+function toStage(){if(location.hash!=="#stage")location.hash="#stage";else if(window.geoRoute)window.geoRoute()}
 panel.addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;
   if(b.dataset.topic)select(+b.dataset.topic,{focus:true});
@@ -1375,6 +1359,28 @@ $("ppCopy").addEventListener("click",function(){var txt=passportText(),st=$("ppS
   setTimeout(function(){st.textContent=""},4000)});
 confirmBtn($("ppClear"),"Растау: паспортты өшіру",function(){P={};keep("geoeco-passport",P);["ppTopic","ppGrade","ppTeam"].forEach(function(id){$(id).value=""});STEPS.forEach(function(s,i){$("pp"+i).value=""});drawPP()});
 drawPP();
+})();
+</script>
+<script>
+(function(){
+"use strict";
+var views=[].slice.call(document.querySelectorAll(".view")),tabs=[].slice.call(document.querySelectorAll(".tabs a")),tools=["water","waste","green","traffic","energy"];
+var lastTool="water";
+function showTool(id){lastTool=id;tools.forEach(function(t){var el=document.getElementById(t);if(el)el.hidden=t!==id});
+  [].forEach.call(document.querySelectorAll(".labtabs a"),function(a){a.setAttribute("aria-selected",a.dataset.tool===id)})}
+function route(){
+  var h="";try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}
+  var el=h?document.getElementById(h):null;if(!el||!el.closest(".view"))el=document.getElementById("maket");
+  var v=el.closest(".view");views.forEach(function(x){x.hidden=x!==v});
+  tabs.forEach(function(a){if(a.dataset.view===v.id)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  if(tools.indexOf(el.id)>=0)showTool(el.id);else if(v.id==="view-zerthana")showTool(lastTool);
+  if(el.tagName==="DETAILS")el.open=true;
+  var top=el.classList.contains("hero")||el.closest(".band")&&el===el.closest(".band")||tools.indexOf(el.id)>=0;
+  if(top)window.scrollTo(0,0);else el.scrollIntoView({block:"start"});
+}
+window.geoRoute=route;
+window.addEventListener("hashchange",route);
+route();
 })();
 </script>
 </body>
