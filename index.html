@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Геоэкологиялық зерттеу платформасы</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700;800&display=swap">
+<style>
+/* Layout: a live 3D school-yard model is the hero; the page below is cut like a soil profile */
+:root{
+  --bg:#E6ECE7; --bg-2:#D9E3DB; --surface:#F5F8F5; --ink:#10221B; --ink-2:#4A5D54; --line:#B5C5BA;
+  --accent:#2A44D4; --on-accent:#FFFFFF; --leaf:#2B8247; --heat:#D2451D;
+  --sky-1:#C6DBEA; --sky-2:#E6ECE7; --panel:rgba(245,248,245,.93);
+  --shadow:0 18px 40px -18px rgba(16,34,27,.35);
+  --s0-bg:#5E9B4C; --s0-fg:#0E1F14; --s1-bg:#583C27; --s1-fg:#F5ECDF;
+  --s2-bg:#B6834E; --s2-fg:#21150A; --s3-bg:#A9A59C; --s3-fg:#1A1916; --grain:rgba(0,0,0,.16);
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --maxw:1320px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1815; --bg-2:#12211C; --surface:#162822; --ink:#E4EEE8; --ink-2:#9EB4A9; --line:#2A3F38;
+  --accent:#8B9CFF; --on-accent:#0B1030; --leaf:#5DC27F; --heat:#FF7B4F;
+  --sky-1:#17283C; --sky-2:#0D1815; --panel:rgba(18,33,28,.92); --shadow:0 18px 40px -18px rgba(0,0,0,.7);
+  --s0-bg:#2F5A2A; --s0-fg:#E2F0DA; --s1-bg:#3B2819; --s1-fg:#F1E4D2; --s2-bg:#6E4C2A; --s2-fg:#F6E8D6;
+  --s3-bg:#4A4842; --s3-fg:#ECE9E2; --grain:rgba(255,255,255,.10); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1815; --bg-2:#12211C; --surface:#162822; --ink:#E4EEE8; --ink-2:#9EB4A9; --line:#2A3F38;
+  --accent:#8B9CFF; --on-accent:#0B1030; --leaf:#5DC27F; --heat:#FF7B4F;
+  --sky-1:#17283C; --sky-2:#0D1815; --panel:rgba(18,33,28,.92); --shadow:0 18px 40px -18px rgba(0,0,0,.7);
+  --s0-bg:#2F5A2A; --s0-fg:#E2F0DA; --s1-bg:#3B2819; --s1-fg:#F1E4D2; --s2-bg:#6E4C2A; --s2-fg:#F6E8D6;
+  --s3-bg:#4A4842; --s3-fg:#ECE9E2; --grain:rgba(255,255,255,.10); color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+a{color:inherit} button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:760px){.wrap{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;line-height:1.1}
+h2{font-weight:700;font-size:clamp(25px,3.4vw,44px);letter-spacing:-.015em}
+h3{font-weight:700;font-size:17px;line-height:1.25}
+.eyebrow{font:600 12px/1.3 var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);margin:0}
+.lead{font-size:clamp(16px,1.4vw,18px);color:var(--ink-2);max-width:62ch;margin:0}
+.sec-head{display:grid;gap:14px;margin-bottom:clamp(28px,4vw,48px)}
+.band{padding-block:clamp(64px,9vw,120px)}
+.band.alt{background:var(--bg-2)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:1px solid transparent;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-ghost{border-color:var(--line);background:transparent}
+.num{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font:600 12px/1 var(--f-mono)}
+
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 14px/1.15 var(--f-display)}
+.brand small{display:block;font:500 11px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.brand svg{width:34px;height:34px;flex:none}
+.nav-links{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.nav-links a{display:block;padding:8px 12px;border-radius:999px;text-decoration:none;font-size:14px;color:var(--ink-2)}
+.nav-links a:hover{background:var(--surface);color:var(--ink)}
+@media (max-width:960px){.nav-links{display:none}}
+
+/* hero */
+.hero-head{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:end;padding-block:clamp(12px,3vw,36px) clamp(22px,3vw,34px)}
+.tq{container-type:inline-size;display:grid;gap:14px}
+.hero-title{font-weight:800;font-size:clamp(26px,4vw,58px);font-size:clamp(26px,7.2cqi,62px);line-height:1.02;letter-spacing:-.025em;overflow-wrap:break-word}
+.hero-title .l2{display:block;font-weight:500;color:var(--ink-2);font-size:.56em;letter-spacing:-.01em;margin-top:.3em}
+.hero-side{display:grid;gap:18px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;font:500 13px/1.4 var(--f-mono);color:var(--ink-2);margin:0;padding:0;list-style:none}
+.facts b{color:var(--ink);font-weight:600}
+@media (max-width:820px){.hero-head{grid-template-columns:1fr;align-items:start}}
+
+/* stage */
+.stage{position:relative;height:clamp(520px,54vw,690px);border-radius:24px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(120% 90% at 30% 0%,var(--sky-1),var(--sky-2) 75%);box-shadow:var(--shadow);scroll-margin-top:16px}
+.stage-view{position:absolute;inset:0}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+.stage canvas:active{cursor:grabbing}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .7s}
+.labels.ready{opacity:1}
+.stage-cap{position:absolute;top:16px;left:18px;display:grid;gap:3px;pointer-events:none;max-width:calc(100% - 36px)}
+.stage-cap strong{font:700 13px/1.25 var(--f-display)}
+.stage-cap span{font:500 12px/1.3 var(--f-mono);color:var(--ink-2)}
+.toolbar{position:absolute;left:14px;bottom:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--panel);border:1px solid var(--line)}
+.seg button{border:0;background:transparent;padding:7px 13px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.icon-btn,.compass{width:40px;height:40px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;padding:0}
+.icon-btn{cursor:pointer}
+.icon-btn svg{width:18px;height:18px}
+.compass svg{width:34px;height:34px}
+#needle{transform-origin:20px 20px}
+.legend{position:absolute;top:64px;left:18px;width:min(240px,calc(100% - 36px));padding:10px 12px 8px;border-radius:12px;background:var(--panel);border:1px solid var(--line);display:grid;gap:6px}
+.lg-title{font:600 11.5px/1.3 var(--f-mono)}
+.lg-bar{height:10px;border-radius:3px;background:linear-gradient(90deg,#2b59c3 0%,#36a7c9 23.5%,#9dd36b 41.2%,#f4d03f 58.8%,#f08a24 76.5%,#d7301f 94.1%,#d7301f 100%)}
+.lg-ticks{position:relative;height:14px;font:500 10.5px var(--f-mono);color:var(--ink-2)}
+.lg-ticks span{position:absolute;top:0;transform:translateX(-50%)}
+.lg-ticks span:last-child{transform:translateX(-100%)}
+.lg-note{font:500 10.5px/1.3 var(--f-mono);color:var(--ink-2)}
+.lg-note.warn{color:var(--heat)}
+.stage-fallback{position:absolute;inset:auto 18px 70px 18px;margin:0;padding:12px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:14px}
+
+.pin,.tpin,.spin{position:absolute;left:0;top:0;width:0;height:0}
+.pin::before{content:"";position:absolute;left:-1px;bottom:0;width:2px;height:13px;background:var(--ink);opacity:.6}
+.pin::after{content:"";position:absolute;left:-3px;bottom:-3px;width:6px;height:6px;border-radius:50%;background:var(--ink)}
+.pin-in{position:absolute;left:-17px;bottom:12px;display:flex;align-items:center;padding:3px;border-radius:999px;border:1px solid var(--line);background:var(--surface);box-shadow:0 8px 20px -8px rgba(0,0,0,.45);cursor:pointer;pointer-events:auto;white-space:nowrap}
+.pin-in .num{width:26px;height:26px}
+.pin-in .lbl{max-width:0;overflow:hidden;font-size:13px;font-weight:600;transition:max-width .3s ease,padding .3s;padding:0}
+.pin-in:hover .lbl,.pin-in:focus-visible .lbl,.pin.active .lbl{max-width:220px;padding:0 10px 0 8px}
+.pin.active .num{background:var(--heat)}
+.tpin,.spin{display:none}
+.labels.thermal .pin{display:none}
+.labels.thermal .tpin{display:block}
+.labels.strata .spin{display:block}
+.tp-in{position:absolute;left:0;bottom:10px;transform:translateX(-50%);display:flex;gap:6px;align-items:center;padding:4px 9px;border-radius:8px;background:var(--surface);border:1px solid var(--line);font:600 12px/1.2 var(--f-mono);white-space:nowrap;box-shadow:0 8px 20px -10px rgba(0,0,0,.5)}
+.tp-in i{width:10px;height:10px;border-radius:3px;background:var(--c,transparent);border:1px solid var(--line)}
+.tp-in em{font-style:normal;color:var(--ink-2)}
+.spin::before{content:"";position:absolute;left:0;top:-1px;width:16px;height:2px;background:var(--ink)}
+.sp-in{position:absolute;left:16px;top:0;transform:translateY(-50%);padding:3px 8px;border-radius:6px;background:var(--surface);border:1px solid var(--line);font:600 11.5px/1.2 var(--f-mono);white-space:nowrap}
+
+.panel{position:absolute;top:14px;right:14px;bottom:14px;width:min(370px,38%);background:var(--panel);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:18px;overflow:auto;padding:22px;display:flex;flex-direction:column;gap:16px}
+.p-title{font:700 clamp(19px,1.8vw,23px)/1.15 var(--f-display);text-wrap:balance;outline:none}
+.p-lead{margin:0;color:var(--ink-2);font-size:14.5px}
+.t-index{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.t-row{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:8px 10px;border-radius:12px;border:1px solid transparent;background:transparent;cursor:pointer}
+.t-row:hover{background:var(--bg);border-color:var(--line)}
+.t-name{display:block;font-weight:600;font-size:14.5px;line-height:1.3}
+.t-where{display:block;font:500 11.5px/1.3 var(--f-mono);color:var(--ink-2);margin-top:2px}
+.p-nav{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.p-back,.p-step{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.p-back:hover,.p-step:hover{background:var(--bg)}
+.p-count{font:600 12px var(--f-mono);color:var(--ink-2)}
+.p-dl{margin:0;display:grid;gap:14px}
+.p-dl dt{font:600 11px/1.3 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);margin-bottom:3px}
+.p-dl dd{margin:0;font-size:15px}
+.p-dl .note{padding:10px 12px;border-radius:10px;background:var(--bg);border:1px dashed var(--line)}
+.p-foot{margin-top:auto;display:flex;justify-content:space-between;gap:8px;padding-top:6px}
+@media (max-width:900px){
+  .stage{height:auto}
+  .stage-view{position:relative;height:min(480px,122vw)}
+  .stage-cap span{display:none}
+  .legend{top:auto;bottom:64px;left:14px;width:min(210px,calc(100% - 28px));padding:8px 10px 6px;gap:4px}
+  .lg-title{font-size:10.5px}
+  .panel{position:static;width:auto;border:0;border-top:1px solid var(--line);border-radius:0;-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--surface)}
+  .pin-in .lbl{display:none}
+}
+
+/* steps */
+.cycle{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--ink)}
+.step{padding:22px 22px 6px 0;display:grid;gap:14px;align-content:start}
+.step+.step{padding-left:22px;border-left:1px solid var(--line)}
+.step-k{font:600 12px var(--f-mono);color:var(--ink-2)}
+.step-word{font:800 clamp(24px,2.6vw,36px)/1.05 var(--f-display);letter-spacing:-.02em}
+.step:not(:last-child) .step-word::after{content:" →";color:var(--accent);font-weight:500}
+.mat{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.mat li{display:grid;gap:2px}
+.mat b{font-weight:600}
+.mat span{font-size:14px;color:var(--ink-2)}
+.mat .spec{font:500 11.5px var(--f-mono);color:var(--accent)}
+@media (max-width:900px){.cycle{grid-template-columns:repeat(2,minmax(0,1fr))}.step:nth-child(3){padding-left:0;border-left:0}}
+@media (max-width:560px){.cycle{grid-template-columns:1fr}.step+.step{padding-left:0;border-left:0;border-top:1px solid var(--line)}}
+.dq{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px 40px;align-items:center;padding:22px;border-radius:18px;border:1px solid var(--line);background:var(--surface)}
+.dq p{margin:0}
+.dq-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;overflow:hidden;font:600 12px/1.3 var(--f-mono)}
+.dq-row span{padding:10px;border-left:1px solid var(--line);background:var(--bg)}
+.dq-row span:first-child{border-left:0}
+@media (max-width:760px){.dq{grid-template-columns:1fr}.dq-row{grid-template-columns:repeat(2,minmax(0,1fr))}.dq-row span:nth-child(3){border-left:0}.dq-row span:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* cards */
+.sections{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card,.pcard{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px;transition:transform .25s ease,box-shadow .25s;will-change:transform}
+.card:hover,.pcard:hover{box-shadow:var(--shadow)}
+.card p,.pcard p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.card .who{margin-top:auto;padding-top:12px;border-top:1px dashed var(--line);color:var(--ink)}
+.who span{font:600 11px var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--leaf);margin-right:6px}
+.card.feature{grid-column:span 2;background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.card.feature p,.card.feature .eyebrow{color:var(--bg);opacity:.85}
+.card.feature h3{font-size:clamp(20px,2vw,27px)}
+.card.feature .who{border-color:var(--bg);color:var(--bg)}
+.card.feature .who span{color:var(--bg)}
+.card.feature a{font-weight:600;color:var(--bg)}
+@media (max-width:1100px){.sections{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){.sections{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.sections{grid-template-columns:1fr}.card.feature{grid-column:auto}}
+
+/* study */
+.study{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:900px){.study{grid-template-columns:1fr}}
+.route{list-style:none;margin:0;padding:0;counter-reset:st}
+.route li{position:relative;padding:0 0 22px 48px}
+.route li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;border:2px solid var(--leaf);display:grid;place-items:center;font:600 12px var(--f-mono);background:var(--bg)}
+.route li::after{content:"";position:absolute;left:15px;top:36px;bottom:4px;border-left:2px dashed var(--line)}
+.route li:last-child::after{display:none}
+.route b{display:block;font:700 15px/1.3 var(--f-display);margin-bottom:3px;padding-top:5px}
+.route span{color:var(--ink-2);font-size:15px}
+.datacard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,2.4vw,28px);display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+.dc-head{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.dc-head h3{margin-top:6px;font-size:20px}
+.badge{flex:none;font:600 11px var(--f-mono);padding:5px 9px;border-radius:999px;border:1px dashed var(--leaf);color:var(--leaf);white-space:nowrap}
+.meta-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.meta-grid label,.field label,.field>span{display:grid;gap:4px;font:600 11px/1.3 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.meta-grid input,.inp{width:100%;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:500 14px var(--f-body);text-transform:none;letter-spacing:0}
+@media (max-width:520px){.meta-grid{grid-template-columns:1fr 1fr}.meta-grid label:last-child{grid-column:1/-1}}
+.datacard p{margin:0}
+.dc-note{font-size:14px;color:var(--ink-2)}
+.dc-meta{font:500 11.5px/1.5 var(--f-mono);color:var(--ink-2)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th{text-align:left;font:600 11px var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:7px 8px;border-bottom:1px solid var(--line)}
+td.m{font-family:var(--f-mono);font-size:13px}
+td input{width:86px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:500 14px var(--f-mono)}
+.plot{display:grid;gap:4px}
+.prow{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center}
+.pid{font:600 12px var(--f-mono);color:var(--ink-2)}
+.ptrack{position:relative;height:28px;border-left:1px solid var(--line);border-right:1px solid var(--line);background:repeating-linear-gradient(90deg,transparent 0 calc(100% / var(--n) - 1px),var(--line) calc(100% / var(--n) - 1px) calc(100% / var(--n)))}
+.ptrack::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed var(--line)}
+.pdot{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-50%);background:var(--c);border:2px solid var(--surface);box-shadow:0 0 0 1px var(--ink)}
+.pval{position:absolute;top:50%;transform:translate(14px,-50%);font:600 12.5px var(--f-mono);white-space:nowrap}
+.pval.flip{transform:translate(calc(-100% - 14px),-50%)}
+.paxis{position:relative;height:18px;font:500 11px var(--f-mono);color:var(--ink-2)}
+.paxis span{position:absolute;top:0;transform:translateX(-50%)}
+.psum{font-size:14.5px}
+.dc-actions{display:flex;flex-wrap:wrap;gap:10px}
+
+/* strata */
+.strata{border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.stratum{position:relative;display:grid;grid-template-columns:150px minmax(0,1fr) minmax(0,1fr);gap:14px 32px;padding:28px clamp(18px,3vw,36px);align-items:start}
+.stratum>*{position:relative}
+.stratum::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--grain) 1.3px,transparent 1.8px);background-size:22px 16px;pointer-events:none}
+.stratum.s0{background:var(--s0-bg);color:var(--s0-fg);grid-template-columns:1fr;padding-block:12px;font:600 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.stratum.s1{background:var(--s1-bg);color:var(--s1-fg)}
+.stratum.s2{background:var(--s2-bg);color:var(--s2-fg)}
+.stratum.s2::before{background-size:30px 22px}
+.stratum.s3{background:var(--s3-bg);color:var(--s3-fg)}
+.stratum.s3::before{background-image:radial-gradient(var(--grain) 3px,transparent 3.6px);background-size:44px 34px}
+.grade{font:800 clamp(30px,3.6vw,46px)/1 var(--f-display);letter-spacing:-.02em}
+.depth{display:block;font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-top:8px}
+.stratum p{margin:0;font-size:15.5px}
+.stratum .k{display:block;font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;opacity:.75;margin-bottom:4px}
+@media (max-width:760px){.stratum{grid-template-columns:1fr}}
+
+/* projects */
+.chain{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:10px 0;counter-reset:c}
+.chain li{display:flex;align-items:center;font-weight:600;font-size:14px}
+.chain li span{padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);display:inline-flex;gap:8px;align-items:center}
+.chain li span::before{counter-increment:c;content:counter(c);font:600 11px var(--f-mono);color:var(--accent)}
+.chain li:not(:last-child)::after{content:"";width:18px;border-top:2px dashed var(--line)}
+.chain-note{color:var(--ink-2);max-width:72ch;margin:0 0 clamp(28px,4vw,44px)}
+.pgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.pcard h3{font-size:16.5px}
+.ptag{font:600 11px/1.3 var(--f-mono)!important;text-transform:uppercase;letter-spacing:.07em;color:var(--leaf)!important}
+.pcard .foot{margin-top:auto;padding-top:8px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.link-btn{border:0;background:none;padding:0;font-weight:600;font-size:14px;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.pcard.model{border-style:dashed;border-width:2px;background:transparent}
+.pcard.model .ptag{color:var(--heat)!important}
+@media (max-width:1000px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.pgrid{grid-template-columns:1fr}}
+
+/* eval */
+.eval{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ecol{padding:26px;border-radius:20px;border:1px solid var(--line);background:var(--surface);display:grid;gap:14px;align-content:start}
+.ecol ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.ecol li{padding-left:22px;position:relative}
+.ecol li::before{content:"";position:absolute;left:2px;top:.6em;width:9px;height:9px;border-radius:2px;background:var(--leaf);transform:rotate(45deg)}
+.loop{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:18px 22px;border-radius:20px;border:1px dashed var(--line);font-weight:600}
+.loop span{padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.loop i{font-style:normal;color:var(--accent)}
+.loop small{flex-basis:100%;font:500 12px/1.5 var(--f-mono);color:var(--ink-2)}
+@media (max-width:760px){.eval{grid-template-columns:1fr}}
+
+/* launch */
+.launch{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;align-items:stretch}
+.lgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.kit{padding:24px;border-radius:20px;background:var(--ink);color:var(--bg);display:grid;gap:14px;align-content:start}
+.kit .eyebrow{color:var(--bg);opacity:.8}
+.kit ul{list-style:none;margin:0;padding:0;display:grid}
+.kit li{display:grid;grid-template-columns:44px 1fr;align-items:baseline;padding:9px 0;border-bottom:1px dashed color-mix(in srgb,var(--bg) 35%,transparent)}
+.kit li b{font:800 22px var(--f-display);font-variant-numeric:tabular-nums}
+.outcome{margin:clamp(36px,5vw,64px) 0 0;font:600 clamp(19px,2.2vw,28px)/1.35 var(--f-display);max-width:46ch;text-wrap:balance}
+.outcome span{color:var(--leaf)}
+@media (max-width:900px){.launch{grid-template-columns:1fr}}
+@media (max-width:480px){.lgrid{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding-block:28px;font:500 12.5px/1.6 var(--f-mono);color:var(--ink-2)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+/* passport */
+.passport{margin-top:clamp(36px,5vw,56px);padding:clamp(18px,2.6vw,30px);border-radius:22px;border:2px solid var(--ink);background:var(--surface);display:grid;gap:18px;scroll-margin-top:16px}
+.pp-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px}
+.pp-head h3{font-size:clamp(20px,2.2vw,28px);margin-top:6px}
+.pp-progress{display:grid;gap:6px;min-width:180px;font:600 12px var(--f-mono);color:var(--ink-2)}
+.pp-bar{height:8px;border-radius:99px;background:var(--bg);border:1px solid var(--line);overflow:hidden}
+.pp-bar i{display:block;height:100%;width:0;background:var(--leaf);transition:width .3s}
+.pp-top{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr) minmax(0,1.4fr);gap:12px}
+.field{display:grid;gap:4px;min-width:0}
+.pp-level{margin:0;padding:10px 14px;border-radius:10px;background:var(--bg);border:1px dashed var(--line);font-size:14.5px}
+.pp-level b{font-family:var(--f-mono);font-size:12px;color:var(--leaf);text-transform:uppercase;letter-spacing:.06em;margin-right:6px}
+.pp-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;counter-reset:pp}
+.pp-steps li{display:grid;gap:6px;min-width:0}
+.pp-steps label{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px}
+.pp-steps label::before{counter-increment:pp;content:counter(pp);flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:600 11px var(--f-mono);border:2px solid var(--line);color:var(--ink-2)}
+.pp-steps li.done label::before{background:var(--leaf);border-color:var(--leaf);color:var(--bg)}
+.pp-steps textarea{width:100%;min-height:92px;resize:vertical;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:400 14.5px/1.5 var(--f-body)}
+.pp-steps small{font-size:12.5px;color:var(--ink-2)}
+.pp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.pp-status{font:500 12.5px var(--f-mono);color:var(--leaf)}
+.btn-danger{border-color:var(--heat);color:var(--heat);background:transparent}
+@media (max-width:900px){.pp-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.pp-top{grid-template-columns:1fr 1fr}.pp-top .field:last-child{grid-column:1/-1}}
+@media (max-width:560px){.pp-steps{grid-template-columns:1fr}.pp-top{grid-template-columns:1fr}}
+/* lab */
+.lab{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,2.4vw,28px);display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+.tool-head{display:grid;gap:8px}
+.tool-head h3{font-size:20px}
+.tool-head p:last-child{margin:0;font-size:14.5px;color:var(--ink-2)}
+.tool-row{display:flex;gap:12px}
+.tool-row .field{max-width:200px}
+table.calc td{padding:5px 6px}
+table.calc input{width:100%;min-width:64px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:500 14px var(--f-mono)}
+table.calc input[type=text]{font-family:var(--f-body);min-width:110px}
+table.calc td.out{font:600 13.5px var(--f-mono);white-space:nowrap;text-align:right}
+.del{border:1px solid var(--line);background:transparent;border-radius:8px;width:30px;height:30px;cursor:pointer;color:var(--ink-2)}
+table.calc th{position:relative}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:minmax(64px,auto) minmax(0,1fr) auto;gap:10px;align-items:center;font:500 12.5px var(--f-mono)}
+.bar .tr{height:16px;border-radius:4px;background:var(--bg);border:1px solid var(--line);overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--c,var(--accent))}
+.bar span:first-child{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.empty-note{margin:0;padding:14px;border-radius:12px;border:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
+@media (max-width:900px){.lab{grid-template-columns:minmax(0,1fr)}}
+/* traffic counter */
+.tool.wide{grid-column:1/-1}
+.tc-top{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr) auto auto;gap:12px;align-items:end}
+.tc-clock{display:grid;gap:2px;font:600 11px var(--f-mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+.tc-clock b{font:700 30px/1 var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0}
+.tc-run{display:flex;gap:8px}
+.tc-pad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tc-btn{display:grid;gap:4px;justify-items:start;padding:16px;border-radius:16px;border:2px solid var(--line);background:var(--bg);cursor:pointer;text-align:left;touch-action:manipulation;transition:transform .08s}
+.tc-btn:active{transform:scale(.97)}
+.tc-btn:disabled{opacity:.45;cursor:not-allowed}
+.tc-btn i{width:14px;height:14px;border-radius:4px;background:var(--c)}
+.tc-btn span{font-weight:600;font-size:15px}
+.tc-btn b{font:800 32px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.tc-btn.bump{border-color:var(--c)}
+tr.live td{background:color-mix(in srgb,var(--leaf) 12%,transparent)}
+@media (max-width:760px){.tc-top{grid-template-columns:1fr 1fr}.tc-top .field:first-child{grid-column:1/-1}.tc-pad{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* green passport + waste */
+.tool{scroll-margin-top:16px}
+.gmap-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.gmap{position:relative;aspect-ratio:4/3;max-width:100%;cursor:crosshair;background-color:color-mix(in srgb,var(--leaf) 16%,var(--bg));background-size:cover;background-position:center;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);}
+.gmap:not(.has-bg){background-size:12.5% 16.666%,12.5% 16.666%}
+.gcols,.grows{position:absolute;pointer-events:none;font:600 10px var(--f-mono);color:var(--ink-2)}
+.gcols{left:0;right:0;top:3px;display:grid;grid-template-columns:repeat(8,1fr);text-align:center}
+.grows{top:0;bottom:0;left:4px;display:grid;grid-template-rows:repeat(6,1fr);align-items:center}
+.gmap.has-bg .gcols,.gmap.has-bg .grows{color:#fff;text-shadow:0 1px 2px #000}
+.gtree{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;border:2px solid var(--surface);background:var(--leaf);color:var(--surface);font:700 11px var(--f-mono);display:grid;place-items:center;padding:0;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.gtree.bush{border-radius:7px;background:color-mix(in srgb,var(--leaf) 60%,var(--ink))}
+.gtree.bad{background:var(--heat)}
+.gtree.hot{outline:3px solid var(--accent);outline-offset:1px}
+.sr-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.file-btn{position:relative}
+.sr-file:focus-visible+.file-btn,.file-btn:focus-within{outline:2px solid var(--accent)}
+table.calc select{padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:500 13.5px var(--f-body)}
+table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#xTable input{min-width:58px}
+#xTable td:first-child{white-space:nowrap}
+.bar-group{font:600 11px var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin-top:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="#maket">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <polygon points="16,3 29,10 16,17 3,10" fill="var(--leaf)"/>
+      <polygon points="3,10 16,17 16,21.3 3,14.3" fill="var(--s1-bg)"/>
+      <polygon points="3,14.3 16,21.3 16,25.7 3,18.7" fill="var(--s2-bg)"/>
+      <polygon points="3,18.7 16,25.7 16,30 3,23" fill="var(--s3-bg)"/>
+      <polygon points="16,17 29,10 29,14.3 16,21.3" fill="var(--s1-bg)"/>
+      <polygon points="16,21.3 29,14.3 29,18.7 16,25.7" fill="var(--s2-bg)"/>
+      <polygon points="16,25.7 29,18.7 29,23 16,30" fill="var(--s3-bg)"/>
+      <polygon points="16,17 29,10 29,23 16,30" fill="var(--ink)" opacity=".2"/>
+    </svg>
+    <span>Геоэкология<small>зерттеу платформасы</small></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#maket">Макет</a></li>
+    <li><a href="#kadamdar">Қадамдар</a></li>
+    <li><a href="#bolimder">Бөлімдер</a></li>
+    <li><a href="#zertteu">Менің зерттеуім</a></li>
+    <li><a href="#zerthana">Зертхана</a></li>
+    <li><a href="#synyptar">Сыныптар</a></li>
+    <li><a href="#zhobalar">Жобалар</a></li>
+    <li><a href="#bastau">Бастау</a></li>
+  </ul>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-head">
+      <div class="tq">
+        <p class="eyebrow">7–11-сыныптарға арналған тұжырымдама</p>
+        <h1 class="hero-title"><span class="l1">Геоэкологиялық</span> <span class="l2">зерттеу платформасы</span></h1>
+      </div>
+      <div class="hero-side">
+        <p class="lead">Оқушы жергілікті экологиялық мәселені зерттеуді, нақты деректерді талдауды және дәлелді шешім ұсынуды үйренеді. Нәтижесі карта, инфографика, зерттеу есебі немесе модель түрінде ұсынылады.</p>
+        <div class="cta-row"><a class="btn btn-primary" href="#maket">Макетті зерттеу</a><a class="btn btn-ghost" href="#passport">Жоба паспортын толтыру</a></div>
+        <ul class="facts"><li><b>8</b> тақырып</li><li><b>11</b> бөлім</li><li><b>7</b> материал әр тақырыпта</li><li><b>4</b> бастапқы жоба</li></ul>
+      </div>
+    </div>
+
+    <div class="stage" id="maket">
+      <div class="stage-view" id="stageView">
+        <canvas id="scene" role="img" aria-label="Мектеп ауласының 3D макеті: жол, тоған, мектеп ғимараты, ағаштар, ауа райы бекеті, күн панельдері мен жел турбинасы"></canvas>
+        <div class="labels" id="labels"></div>
+        <div class="stage-cap"><strong>Мектеп ауласының цифрлық макеті</strong><span>Сүйреп айналдыр · нөмірді бас</span></div>
+        <div class="legend" id="legend" hidden>
+          <div class="lg-title">Ауа температурасы, °C</div>
+          <div class="lg-bar"></div>
+          <div class="lg-ticks"><span style="left:5.9%">24</span><span style="left:29.4%">28</span><span style="left:52.9%">32</span><span style="left:76.5%">36</span><span style="left:100%">40</span></div>
+          <div class="lg-note" id="lgNote"></div>
+        </div>
+        <div class="toolbar" id="toolbar">
+          <div class="compass" title="Солтүстік бағыты">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+              <g id="needle"><polygon points="20,6 24,20 16,20" fill="var(--heat)"/><polygon points="20,34 24,20 16,20" fill="var(--ink-2)"/><text x="20" y="5.5" text-anchor="middle" font-size="6" font-family="JetBrains Mono, monospace" font-weight="700" fill="var(--ink)">С</text></g></svg>
+          </div>
+          <div class="seg" role="group" aria-label="Көрініс режимі">
+            <button type="button" id="modeModel" aria-pressed="true">Макет</button>
+            <button type="button" id="modeThermal" aria-pressed="false">Жылу картасы</button>
+          </div>
+          <button type="button" class="icon-btn" id="homeBtn" aria-label="Жалпы көрініс" title="Жалпы көрініс">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+          </button>
+        </div>
+        <p class="stage-fallback" id="fallback" hidden>3D макет бұл браузерде ашылмады. Тақырыптар тізімі жанында ашық тұр.</p>
+      </div>
+      <aside class="panel" id="panel" aria-live="polite"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="kadamdar">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Әр тақырыптың ішінде</p>
+      <h2>Әр тақырып бір ырғақпен жүреді</h2>
+      <p class="lead">Әр тақырыпқа бірдей жеті материал салынады. Олар оқушының жұмыс ретімен төрт қадамға бөлінеді.</p>
+    </div>
+    <ol class="cycle">
+      <li class="step"><span class="step-k">1 / 4</span><span class="step-word">Оқы</span>
+        <ul class="mat">
+          <li><b>Ақпараттық мәтін</b><span class="spec">300–500 сөз</span><span>Негізгі ұғымдар мен мәселенің себеп-салдары.</span></li>
+          <li><b>Көрнекілік</b><span class="spec">фото · сызба · карта</span><span>Түсіндірмесі бар фотосуреттер, сызба немесе карта.</span></li>
+        </ul></li>
+      <li class="step"><span class="step-k">2 / 4</span><span class="step-word">Зертте</span>
+        <ul class="mat">
+          <li><b>Деректер жиынтығы</b><span class="spec">талдауға дайын кесте</span><span>Дереккөзі, орны, мерзімі және өлшем бірлігі көрсетіледі.</span></li>
+          <li><b>Зерттеу нұсқаулығы</b><span class="spec">сұрақ · құрал · қадам</span><span>Жұмыс қадамдары, қауіпсіздік және әдістің шектеулері.</span></li>
+          <li><b>Жұмыс парағы</b><span class="spec">жүктеледі</span><span>Бақылау кестесі, есептеу орны және қорытынды сұрақтары.</span></li>
+        </ul></li>
+      <li class="step"><span class="step-k">3 / 4</span><span class="step-word">Өнім жаса</span>
+        <ul class="mat">
+          <li><b>Шығармашылық тапсырма</b><span class="spec">карта · инфографика · модель</span><span>Бейнетүсіндірме де болады. Өнім үлгісі мен тексеру парағы беріледі.</span></li>
+        </ul></li>
+      <li class="step"><span class="step-k">4 / 4</span><span class="step-word">Бағала</span>
+        <ul class="mat">
+          <li><b>Бағалау парағы</b><span class="spec">4 көрсеткіш</span><span>Деректің дұрыстығы, талдау сапасы, дәлелді қорытынды және ұсыныстың негізділігі.</span></li>
+        </ul></li>
+    </ol>
+    <div class="dq">
+      <div><p class="eyebrow">Дерек сапасы</p><p style="margin-top:8px">Әр кестеде осы төрт белгі көрсетіледі. Бақылау нәтижелері мен дайын деректердің шығу тегі ажыратылып беріледі.</p></div>
+      <div class="dq-row"><span>дереккөз</span><span>жиналған күн</span><span>орын</span><span>өлшем бірлігі</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="bolimder">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Платформа</p>
+      <h2>Платформаның он бір бөлімі</h2>
+      <p class="lead">Мазмұн «Геоэкологиялық зерттеулер негіздері» элективті курсы мен «География» оқу-әдістемелік құралына сәйкестендіріледі. Курс теориялық негізді, ал құрал жұмыс нұсқаулықтары мен тапсырмаларды береді.</p>
+    </div>
+    <div class="sections">
+      <article class="card feature" data-tilt>
+        <p class="eyebrow">Негізгі ерекшелік</p>
+        <h3>Менің геоэкологиялық зерттеуім</h3>
+        <p>Жоба паспорты, жоспар, топ міндеттері, дерек енгізу, күнделік, фото, қорытынды және жұмыс тапсыру орны.</p>
+        <p class="who"><span>Оқушы</span>бір мәселені таңдап, толық зерттеу жүргізеді. <a href="#passport">Паспортты толтыру</a></p>
+      </article>
+      <article class="card" data-tilt><h3>Курс кітапханасы</h3><p>Курс бағдарламасы, 8 тақырыптық мәтін, ұғымдар сөздігі, көрнекіліктер және қысқа бейнетүсіндірмелер.</p><p class="who"><span>Оқушы</span>мәселенің себептері мен салдарын анықтайды</p></article>
+      <article class="card" data-tilt><h3>Жобалар банкі</h3><p>Сынып пен тақырып бойынша зерттеу сұрақтары, жоба тапсырмалары, паспорттар және дайын жұмыс үлгілері.</p><p class="who"><span>Оқушы</span>өзіне қызықты мәселені таңдайды</p></article>
+      <article class="card" data-tilt><h3>Жас зерттеуші</h3><p>Мәселе, мақсат, болжам құру; бақылау, салыстыру, сауалнама, өлшеу және карталау әдістерін таңдау нұсқаулықтары.</p><p class="who"><span>Оқушы</span>зерттеуін кезең-кезеңімен жоспарлайды</p></article>
+      <article class="card" data-tilt><h3>Географиялық деректер зертханасы</h3><p>Карталар, климаттық кестелер, статистика, спутниктік суреттер; дерек талдау, диаграмма және шартты белгі жасау үлгілері.</p><p class="who"><span>Оқушы</span>деректерді салыстырып, заңдылықтарды анықтайды</p></article>
+      <article class="card" data-tilt><h3>Өлкетану және далалық зерттеу</h3><p>Бақылау парақтары, маршрут карталары, өлшеу кестелері, қауіпсіздік ережелері.</p><p class="who"><span>Оқушы</span>өз аумағын бақылап, нақты дерек жинайды</p></article>
+      <article class="card" data-tilt><h3>Шығармашылық шеберхана</h3><p>Карта, инфографика, макет, фотоколлаж, бейнеролик және виртуалды экскурсия жасау нұсқаулықтары мен тексеру парақтары.</p><p class="who"><span>Оқушы</span>зерттеу нәтижесін шығармашылық өнімге айналдырады</p></article>
+      <article class="card" data-tilt><h3>Виртуалды тәжірибелер</h3><p>Су айналымы, эрозия, климат факторлары және қала экологиясы модельдері.</p><p class="who"><span>Оқушы</span>шарттарды өзгертіп, нәтижесін түсіндіреді</p></article>
+      <article class="card" data-tilt><h3>Бағалау және кері байланыс</h3><p>Критерийлер, өзіндік және өзара бағалау, мұғалім пікірі, рефлексия; бастапқы және жетілдірілген жұмыстар портфолиосы.</p><p class="who"><span>Оқушы</span>жұмысын тексеріп, жетілдіреді</p></article>
+      <article class="card" data-tilt><h3>Жобалар галереясы</h3><p>Жариялауға келісім берілген зерттеу есептері, карталар, макеттер, таныстырылымдар және бейнеқорғаулар.</p><p class="who"><span>Оқушы</span>нәтижесін жариялап, басқалардың жұмыстарымен танысады</p></article>
+      <article class="card" data-tilt><h3>Мұғалімге арналған бөлім</h3><p>Жобалық сабақ жоспарлары, тапсырмалар, жұмыс парақтары, бағалау құралдары және жұмысты ұйымдастыру нұсқаулықтары.</p><p class="who"><span>Мұғалім</span>жобалық жұмысты ұйымдастырады</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="zertteu">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Негізгі ерекшелік</p>
+      <h2>Менің геоэкологиялық зерттеуім</h2>
+      <p class="lead">Оқушы бір мәселені таңдап, оны басынан соңына дейін зерттейді. Төменде мектеп ауласындағы жасыл желек пен температураны зерттеу жолы, өлшеу кестесі және өз жобаңның паспорты бар.</p>
+    </div>
+    <div class="study">
+      <ol class="route">
+        <li><b>Мәселе</b><span>Мектеп ауласында көлеңкелі орындар жеткілікті ме?</span></li>
+        <li><b>Зерттеу сұрағы</b><span>Жасыл желек ауладағы температураға қалай байланысты?</span></li>
+        <li><b>Жоспар</b><span>Өлшеу нүктелерін, уақытын, құралдарын және топ мүшелерінің міндеттерін белгілеу.</span></li>
+        <li><b>Дерек жинау</b><span>Күн түсетін және көлеңкелі бірнеше нүктеде температураны бір уақытта, бірдей тәсілмен тіркеу.</span></li>
+        <li><b>Талдау</b><span>Нәтижелерді кестеге енгізу, диаграмма мен микроклимат картасын жасау.</span></li>
+        <li><b>Шешім</b><span>Деректерге сүйеніп көгалдандыру сызбасын әзірлеу.</span></li>
+        <li><b>Қорғау және жетілдіру</b><span>Дәлелдер мен әдістің шектеулерін түсіндіру, кері байланыс негізінде ұсынысты толықтыру.</span></li>
+      </ol>
+      <div class="datacard">
+        <div class="dc-head"><div><p class="eyebrow">Дерек жинау → талдау</p><h3>Бес нүктедегі температура</h3></div><span class="badge">Өз өлшемің</span></div>
+        <p class="dc-note">Бес нүктеде температураны бір уақытта, бірдей тәсілмен өлше де, нәтижені енгіз. Диаграмма, талдау және 3D жылу картасы осы мәндерден құрылады.</p>
+        <div class="meta-grid">
+          <label for="mDate">Күні<input id="mDate" type="date"></label>
+          <label for="mTime">Уақыты<input id="mTime" type="time"></label>
+          <label for="mTool">Құрал<input id="mTool" type="text" placeholder="мысалы, сандық термометр"></label>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Нүкте</th><th>Орны</th><th>°C</th></tr></thead>
+          <tbody id="dataBody"></tbody>
+        </table></div>
+        <p class="dc-meta">Дереккөз: өз бақылауың · Өлшем бірлігі: °C · Жазғаның осы браузерде сақталады</p>
+        <div class="plot" id="plot" aria-hidden="true"></div>
+        <p class="psum" id="psum"></p>
+        <div class="dc-actions"><button type="button" class="btn btn-primary" data-thermal-go>3D макетте жылу картасын көру</button><button type="button" class="btn btn-ghost" id="resetData">Кестені тазалау</button></div>
+      </div>
+    </div>
+
+    <div class="passport" id="passport">
+      <div class="pp-head">
+        <div><p class="eyebrow">Менің жобам</p><h3>Жоба паспорты</h3></div>
+        <div class="pp-progress"><span id="ppCount">0 / 9</span><div class="pp-bar"><i id="ppBar"></i></div></div>
+      </div>
+      <div class="pp-top">
+        <div class="field"><label for="ppTopic">Тақырып<select id="ppTopic" class="inp"><option value="">Таңда</option></select></label></div>
+        <div class="field"><label for="ppGrade">Сынып<select id="ppGrade" class="inp"><option value="">Таңда</option><option value="7-8">7–8</option><option value="9">9</option><option value="10-11">10–11</option></select></label></div>
+        <div class="field"><label for="ppTeam">Топ мүшелері<input id="ppTeam" class="inp" type="text" placeholder="аты-жөндері, міндеттері"></label></div>
+      </div>
+      <p class="pp-level" id="ppLevel" hidden></p>
+      <ol class="pp-steps" id="ppSteps"></ol>
+      <div class="pp-actions">
+        <button type="button" class="btn btn-primary" id="ppCopy">Паспортты көшіру</button>
+        <button type="button" class="btn btn-ghost" id="ppClear">Тазалау</button>
+        <span class="pp-status" id="ppStatus" role="status"></span>
+      </div>
+      <p class="dc-meta">Жазғаның осы браузерде сақталады. Мұғалімге тапсыру үшін көшіріп, құжатқа немесе хатқа қой.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="zerthana">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Географиялық деректер зертханасы</p>
+      <h2>Өз дерегіңді есепте</h2>
+      <p class="lead">Бес құрал бастапқы жобаларға, көлік және энергия тақырыптарына арналған. Сандарды өзің жинайсың, ал зертхана есептеп, диаграмма салады.</p>
+    </div>
+    <div class="lab">
+      <div class="tool" id="water">
+        <div class="tool-head"><p class="eyebrow">Тақырып 2 · Су</p><h3>Су есептегіш күнделігі</h3>
+          <p>Есептегіштің көрсеткішін күн сайын бір уақытта жаз (м³). Күндік шығын екі көрсеткіштің айырмасынан литрмен есептеледі.</p></div>
+        <div class="tool-row"><label class="field" for="wPeople"><span>Отбасы мүшелері</span><input id="wPeople" class="inp" type="number" min="1" step="1" placeholder="адам саны"></label></div>
+        <div class="table-wrap"><table class="calc"><thead><tr><th>Күн</th><th>Көрсеткіш, м³</th><th>Шығын, л</th></tr></thead><tbody id="wBody"></tbody></table></div>
+        <div class="bars" id="wBars" aria-hidden="true"></div>
+        <p class="psum" id="wSum"></p>
+        <div class="pp-actions"><button type="button" class="btn btn-ghost" id="wClear">Тазалау</button></div>
+      </div>
+      <div class="tool" id="waste">
+        <div class="tool-head"><p class="eyebrow">Тақырып 3 · Қалдықтар</p><h3>Сынып қалдықтары</h3>
+          <p>Сыныпта пайда болған қалдықты күн соңында түрі бойынша өлше де, граммен жаз. Аптаның соңында қалдықтардың құрамы мен сұрыптауға болатын үлесі шығады.</p></div>
+        <div class="table-wrap"><table class="calc" id="xTable"><thead><tr><th>Түрі</th><th>Дс</th><th>Сс</th><th>Ср</th><th>Бс</th><th>Жм</th><th>Барлығы</th></tr></thead><tbody id="xBody"></tbody></table></div>
+        <div class="bars" id="xBars" aria-hidden="true"></div>
+        <p class="psum" id="xSum"></p>
+        <div class="pp-actions"><button type="button" class="btn btn-ghost" id="xClear">Тазалау</button></div>
+      </div>
+      <div class="tool" id="energy">
+        <div class="tool-head"><p class="eyebrow">Тақырып 7 · Энергия</p><h3>Жарықтандыру шығыны</h3>
+          <p>Сыныптағы әр шамның қуатын (Вт), санын және күніне неше сағат жанатынын жаз. Шығын: қуат × саны × сағат ÷ 1000 = кВт·сағ.</p></div>
+        <div class="table-wrap"><table class="calc"><thead><tr><th>Құрал</th><th>Вт</th><th>Саны</th><th>Сағ/күн</th><th>кВт·сағ</th><th><span class="sr">Жою</span></th></tr></thead><tbody id="eBody"></tbody></table></div>
+        <div class="pp-actions"><button type="button" class="btn btn-ghost" id="eAdd">+ Жол қосу</button><button type="button" class="btn btn-ghost" id="eClear">Тазалау</button></div>
+        <div class="bars" id="eBars" aria-hidden="true"></div>
+        <p class="psum" id="eSum"></p>
+      </div>
+      <div class="tool" id="green">
+        <div class="tool-head"><p class="eyebrow">Тақырып 6 · Жасыл желек</p><h3>Мектептің жасыл паспорты</h3>
+          <p>Ауланың сызбасын бас: сол жерге ағаш белгіленеді. Әр ағаштың түрін, биіктігін және жағдайын жаз. Аула жоспарының суретін жүктесең, ағаштарды соның үстіне қоясың.</p></div>
+        <div class="gmap-wrap">
+          <div class="gmap" id="gMap" role="application" aria-label="Аула сызбасы: ағаш қосу үшін бас"><div class="gcols" aria-hidden="true"></div><div class="grows" aria-hidden="true"></div></div>
+        </div>
+        <div class="pp-actions">
+          <label class="btn btn-ghost file-btn" for="gFile">Аула жоспарын жүктеу</label><input id="gFile" type="file" accept="image/*" class="sr-file">
+          <button type="button" class="btn btn-ghost" id="gBgClear" hidden>Суретті алып тастау</button>
+          <span class="pp-status" id="gStatus" role="status"></span>
+        </div>
+        <datalist id="gSpecies"><option value="Қайың"><option value="Терек"><option value="Қарағаш"><option value="Үйеңкі"><option value="Шырша"><option value="Қарағай"><option value="Тал"><option value="Шетен"><option value="Алма ағашы"><option value="Сирень"><option value="Итмұрын"><option value="Арша"></datalist>
+        <div class="table-wrap"><table class="calc"><thead><tr><th>№</th><th>Орны</th><th>Түрі</th><th>Пішіні</th><th>Биіктігі, м</th><th>Жағдайы</th><th><span class="sr">Жою</span></th></tr></thead><tbody id="gBody"></tbody></table></div>
+        <div class="bars" id="gBars" aria-hidden="true"></div>
+        <p class="psum" id="gSum"></p>
+        <div class="pp-actions"><button type="button" class="btn btn-ghost" id="gClear">Тазалау</button></div>
+      </div>
+      <div class="tool wide" id="traffic">
+        <div class="tool-head"><p class="eyebrow">Тақырып 1 · Ауа және көлік</p><h3>Көлік санағышы</h3>
+          <p>Мектеп маңындағы жолдың бір нүктесінде тұр. Аралық ұзақтығын таңдап, «Бастау» бас. Өткен әр көлік үшін оның түрінің батырмасын бас. Аралық біткенде келесісі өзі басталады.</p></div>
+        <div class="tc-top">
+          <label class="field" for="cPlace"><span>Орны</span><input id="cPlace" class="inp" type="text" placeholder="мысалы, мектептің негізгі қақпасы"></label>
+          <label class="field" for="cLen"><span>Аралық</span><select id="cLen" class="inp"><option value="5">5 минут</option><option value="10" selected>10 минут</option><option value="15">15 минут</option></select></label>
+          <div class="tc-clock"><span id="cInt">Аралық —</span><b id="cTime">00:00</b></div>
+          <div class="tc-run"><button type="button" class="btn btn-primary" id="cStart">Бастау</button><button type="button" class="btn btn-ghost" id="cUndo" disabled>Болдырмау</button></div>
+        </div>
+        <div class="tc-pad" id="cPad"></div>
+        <div class="table-wrap"><table class="calc"><thead><tr><th>Аралық</th><th>Басталды</th><th>Жеңіл</th><th>Автобус</th><th>Жүк</th><th>Басқа</th><th>Барлығы</th></tr></thead><tbody id="cBody"></tbody></table></div>
+        <div class="bars" id="cBars" aria-hidden="true"></div>
+        <p class="psum" id="cSum"></p>
+        <div class="pp-actions"><button type="button" class="btn btn-ghost" id="cClear">Тазалау</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="synyptar">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Сыныптарға бейімдеу</p>
+      <h2>Бір тақырып, үш тереңдік</h2>
+      <p class="lead">Тақырыптар барлық сыныпқа ортақ. Зерттеу ауқымы, деректерді өңдеу тәсілі және қорытындыға қойылатын талап сынып деңгейіне қарай күрделенеді.</p>
+    </div>
+    <div class="strata">
+      <div class="stratum s0">Мысал тақырып: «Жасыл мектеп»</div>
+      <div class="stratum s1"><div><div class="grade">7–8</div><span class="depth">1-қабат · бақылау</span></div><p><span class="k">Тапсырманың деңгейі</span>Бақылау, санау, сипаттау және қарапайым салыстыру.</p><p><span class="k">Мысал</span>Ағаштарды санап, фотосуретке түсіру, картада белгілеу.</p></div>
+      <div class="stratum s2"><div><div class="grade">9</div><span class="depth">2-қабат · есептеу</span></div><p><span class="k">Тапсырманың деңгейі</span>Пайыз есептеу, диаграмма құру және себеп-салдарды түсіндіру.</p><p><span class="k">Мысал</span>Ағаш түрлерінің үлесін есептеп, аумақтар арасындағы айырмашылықты түсіндіру.</p></div>
+      <div class="stratum s3"><div><div class="grade">10–11</div><span class="depth">3-қабат · негіздеу</span></div><p><span class="k">Тапсырманың деңгейі</span>Әдісті негіздеу, деректерді байланыстыру және шектеулерді бағалау.</p><p><span class="k">Мысал</span>Жасыл желек пен температураны салыстырып, көгалдандыру жобасын негіздеу.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="zhobalar">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Жобалар банкі</p>
+      <h2>Зерттеу сұрағынан бастау</h2>
+      <p class="lead">Әр жобаның беті бірдей құрылыммен беріледі:</p>
+    </div>
+    <ol class="chain">
+      <li><span>Мәселе</span></li><li><span>Зерттеу сұрағы</span></li><li><span>Мақсат</span></li><li><span>Жұмыс жоспары</span></li><li><span>Әдістер</span></li><li><span>Жиналған деректер</span></li><li><span>Шығармашылық өнім</span></li><li><span>Қорытынды</span></li><li><span>Бағалау</span></li>
+    </ol>
+    <p class="chain-note">Оқушы үлгілерді жүктеп алады, өз деректерін енгізеді, күнделік жүргізеді және жұмысын тапсырады. Мұғалім кері байланыс береді, оқушы ұсыныстарды ескеріп, өнімін жетілдіреді.</p>
+    <div class="pgrid">
+      <article class="pcard" data-tilt><p class="ptag">Тақырып 6 · Жасыл желек</p><h3>Мектеп ауласын қалай көгалдандыруға болады?</h3><div class="foot"><button type="button" class="link-btn" data-show="6">Макетте көрсету</button></div></article>
+      <article class="pcard" data-tilt><p class="ptag">Тақырып 1 · Ауа және көлік</p><h3>Мектеп маңындағы көлік ағыны және қоршаған орта</h3><div class="foot"><a class="link-btn" href="#traffic">Құралды ашу</a><button type="button" class="link-btn" data-show="1">Макетте көрсету</button></div></article>
+      <article class="pcard" data-tilt><p class="ptag">Тақырып 2 · Су</p><h3>Отбасымыз бір тәулікте қанша су тұтынады?</h3><div class="foot"><button type="button" class="link-btn" data-show="2">Макетте көрсету</button></div></article>
+      <article class="pcard" data-tilt><p class="ptag">Тақырып 3 · Қалдықтар</p><h3>Ауданымыздағы қоқыс жиналатын орындардың картасы</h3><div class="foot"><button type="button" class="link-btn" data-show="3">Макетте көрсету</button></div></article>
+      <article class="pcard" data-tilt><p class="ptag">Тақырып 4 · Микроклимат</p><h3>Мектеп ауласындағы жылы және салқын орындар</h3><div class="foot"><button type="button" class="link-btn" data-show="4">Макетте көрсету</button></div></article>
+      <article class="pcard" data-tilt><p class="ptag">Өлкетану</p><h3>Жергілікті туристік маршрут құрастыру</h3><div class="foot"><p>Маршрут картасы мен бақылау парақтары</p></div></article>
+      <article class="pcard model" data-tilt><p class="ptag">Шығармашылық модельдеу</p><h3>Болашақтың экологиялық қаласы</h3><div class="foot"><p>Өлшенген дерек, дайын ақпарат және модельдегі болжам бөлек көрсетіледі</p></div></article>
+      <article class="pcard model" data-tilt><p class="ptag">Шығармашылық модельдеу</p><h3>Марстағы адам өміріне қолайлы мекен моделі</h3><div class="foot"><p>Өлшенген дерек, дайын ақпарат және модельдегі болжам бөлек көрсетіледі</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="bagalau">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Бағалау</p>
+      <h2>Екі бағыт бойынша бағаланады</h2>
+    </div>
+    <div class="eval">
+      <div class="ecol"><h3>Зерттеушілік құзыреттілік</h3><ul><li>Сұрақтың нақтылығы</li><li>Әдістің негізділігі</li><li>Дерек жинау мен талдау</li><li>Дәлелді қорытынды</li><li>Дереккөздерді көрсету</li></ul></div>
+      <div class="ecol"><h3>Шығармашылық іс-әрекет</h3><ul><li>Идеялардың әртүрлілігі</li><li>Шешімнің өзіндік ерекшелігі</li><li>Бірнеше нұсқа ұсыну</li><li>Өнімді жетілдіру</li></ul></div>
+      <div class="loop"><span>Бастапқы жұмыс</span><i>→</i><span>Өзіндік және өзара бағалау</span><i>→</i><span>Мұғалім пікірі</span><i>→</i><span>Жетілдірілген жұмыс</span>
+        <small>Екі нұсқа да портфолиода сақталады, оқушы рефлексия жазады.</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="bastau">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Алғашқы нұсқа</p>
+      <h2>Іске қосу төрт жобадан басталады</h2>
+      <p class="lead">Алдымен су, қалдықтар, микроклимат және жасыл желек тақырыптарында дерек жинау мен жұмыс тапсыру жолы іске қосылады. Бұл тақырыптар бойынша оқушылар қолжетімді құралдармен нақты дерек жинай алады.</p>
+    </div>
+    <div class="launch">
+      <div class="lgrid">
+        <article class="pcard" data-tilt><p class="ptag">Тақырып 2</p><h3>«Суды үнемдейік»</h3><div class="foot"><a class="link-btn" href="#water">Құралды ашу</a><button type="button" class="link-btn" data-show="2">Макетте көрсету</button></div></article>
+        <article class="pcard" data-tilt><p class="ptag">Тақырып 3</p><h3>«Сынып қалдықтары»</h3><div class="foot"><a class="link-btn" href="#waste">Құралды ашу</a><button type="button" class="link-btn" data-show="3">Макетте көрсету</button></div></article>
+        <article class="pcard" data-tilt><p class="ptag">Тақырып 4</p><h3>«Ауланың жылы және салқын нүктелері»</h3><div class="foot"><a class="link-btn" href="#zertteu">Құралды ашу</a><button type="button" class="link-btn" data-show="4">Макетте көрсету</button></div></article>
+        <article class="pcard" data-tilt><p class="ptag">Тақырып 6</p><h3>«Мектептің жасыл паспорты»</h3><div class="foot"><a class="link-btn" href="#green">Құралды ашу</a><button type="button" class="link-btn" data-show="6">Макетте көрсету</button></div></article>
+      </div>
+      <div class="kit">
+        <p class="eyebrow">Бастапқы жинақ</p>
+        <ul>
+          <li><b>8</b><span>ақпараттық мәтін</span></li>
+          <li><b>4</b><span>зерттеу тапсырмасы</span></li>
+          <li><b>4</b><span>деректер кестесі</span></li>
+          <li><b>1</b><span>зерттеу күнделігі</span></li>
+          <li><b>1</b><span>бағалау парағы</span></li>
+          <li><b>+</b><span>жұмыстар галереясы</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="outcome"><span>Күтілетін нәтиже:</span> оқушы жергілікті мәселе бойынша дерекке сүйенген зерттеу жүргізіп, практикалық ұсынысы бар өнім әзірлейді және оны кері байланыс негізінде жетілдіреді.</p>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Геоэкологиялық зерттеу платформасының тұжырымдамасы · 7–11-сыныптар</span><span>«Геоэкологиялық зерттеулер негіздері» курсы · «География» оқу-әдістемелік құралы</span></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+"use strict";
+document.documentElement.lang="kk";
+var reduced=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+var TOPICS=[
+ {n:1,title:"Ауа сапасы және көлік",short:"Ауа және көлік",where:"Жол және көліктер",info:"Ауаны ластайтын көздер; көлік шығарындылары; ауа сапасы көрсеткіштерінің түсіндірмесі; бақылау кестесі.",task:"Мектеп маңындағы көлік санын белгіленген уақытта санап, салыстыру.",product:"Көлік ағыны картасы, диаграмма, ұсыныс.",pin:[8.5,1.9,4.6],view:{t:[8.2,0.8,2.6],d:[1,0.62,0.75],r:15}},
+ {n:2,title:"Су ресурстары және суды үнемдеу",short:"Су",where:"Тоған мен жаңбыр бұлты",info:"Судың табиғаттағы айналымы; жергілікті су көздері; судың ластану себептері; тұрмыстық су шығынын есептеу үлгісі.",task:"Үйдегі су есептегіш деректерін бірнеше күн тіркеу.",product:"Су тұтыну диаграммасы және үнемдеу жоспары.",pin:[-5,1.4,5.6],view:{t:[-5,3.2,5.6],d:[0.75,0.45,1],r:21}},
+ {n:3,title:"Қалдықтар және жауапты тұтыну",short:"Қалдықтар",where:"Сұрыптау жәшіктері",info:"Қалдық түрлері; сұрыптау белгілері; қайта пайдалану жолдары; жергілікті қабылдау орындары туралы тексерілген ақпарат.",task:"Сыныпта пайда болатын таза қағаз бен қаптама қалдықтарын есепке алу.",product:"Қалдықтар құрамы диаграммасы, сұрыптау жобасы.",pin:[5.35,1.5,-1.6],view:{t:[5.3,0.5,-1.6],d:[1,0.8,1.1],r:11}},
+ {n:4,title:"Ауа райы және жергілікті микроклимат",short:"Микроклимат",where:"Ауа райы бекеті",info:"Температура, жауын-шашын, жел, ылғалдылық ұғымдары; ауа райы мен климат айырмашылығы; өлшеу нұсқаулығы.",task:"Күн түсетін және көлеңкелі орындардың температурасын бір уақытта салыстыру.",product:"Микроклимат картасы, график.",pin:[1.2,3.4,-2.2],view:{t:[1.2,1.4,-2.2],d:[1,0.7,1.1],r:12.5}},
+ {n:5,title:"Топырақ және жердің жағдайы",short:"Топырақ",where:"Топырақ қимасы",info:"Топырақ құрамы; құнарлылық; эрозия; тапталу; өсімдік жамылғысының қорғаныш рөлі; фотомысалдар.",task:"Өсімдігі бар және тапталған аумақтарды бақылап салыстыру.",product:"Фотокарта және жерді қорғау ұсыныстары.",pin:[-4,-1.2,10.05],view:{t:[0,-2,10],d:[0.32,0.28,1],r:19}},
+ {n:6,title:"Жасыл желек және биоалуантүрлілік",short:"Жасыл желек",where:"Ағаштар тобы",info:"Жергілікті ағаштар мен бұталардың фотосуретті анықтағышы; жасыл желектің қызметі; түрлерді тіркеу парағы.",task:"Мектеп ауласындағы ағаштарды санап, түрлері мен орналасуын белгілеу.",product:"«Мектептің жасыл паспорты».",pin:[3.2,3.9,5.1],view:{t:[3.2,1.4,5.2],d:[1,0.75,1.1],r:16}},
+ {n:7,title:"Энергия және ресурс үнемдеу",short:"Энергия",where:"Күн панельдері мен жел турбинасы",info:"Электр энергиясының көздері; жаңартылатын энергия; қуат пен энергия шығынының айырмашылығы; кВт·сағ есептеу үлгісі.",task:"Жарықтандыру құралдарының қуаты мен жұмыс уақыты бойынша тұтынуын есептеу.",product:"Энергия үнемдеу жоспары.",pin:[-4.5,4.5,-5.6],view:{t:[-1.5,3.6,-6],d:[0.9,0.8,1.05],r:21}},
+ {n:8,title:"Тұрақты мектеп және қолайлы орта",short:"Тұрақты мектеп",where:"Жаяу жол мен демалыс орны",info:"Жаяу жүргінші жолдары; көлеңкелі және демалыс орындары; су, энергия, қалдықтар бойынша жинақталған деректер; аумақты жоспарлау үлгілері.",task:"Алдыңғы зерттеулерді біріктіріп, мектеп ауласын жақсарту шешімін ұсыну.",product:"Карта, макет немесе цифрлық модель.",pin:[-0.3,1.6,1.3],view:{t:[-0.5,0.5,0.8],d:[0.8,1.25,1],r:27}}
+];
+
+/* ---- Trees for the 3D model; measurement points get values only from the student ---- */
+var TREES=[
+ {x:1.6,z:4.0,s:1.15,k:"d"},{x:3.4,z:3.0,s:0.95,k:"d"},{x:4.8,z:5.0,s:1.2,k:"d"},{x:2.4,z:6.4,s:1.05,k:"d"},
+ {x:4.2,z:7.6,s:0.95,k:"d"},{x:0.6,z:7.9,s:0.85,k:"d"},{x:5.9,z:3.0,s:0.85,k:"d"},{x:-8.6,z:4.2,s:0.9,k:"d"},
+ {x:5.9,z:7.4,s:1.0,k:"p"},{x:-8.8,z:-1.4,s:1.0,k:"p"},{x:-8.5,z:1.5,s:0.9,k:"p"},{x:6.1,z:-6.8,s:0.8,k:"p"}
+];
+var POINTS=[
+ {id:"T1",name:"Жол жиегі, асфальт",x:7.4,z:3.2},
+ {id:"T2",name:"Тапталған алаң",x:3.2,z:-5.4},
+ {id:"T3",name:"Ауа райы бекеті, ашық көгал",x:1.2,z:-2.2},
+ {id:"T4",name:"Тоған жағасы",x:-2.3,z:6.8},
+ {id:"T5",name:"Ағаштар көлеңкесі",x:2.6,z:4.6}
+];
+var store={};try{store=JSON.parse(localStorage.getItem("geoeco-v1")||"{}")||{}}catch(e){store={}}
+function save(){try{localStorage.setItem("geoeco-v1",JSON.stringify(store))}catch(e){}}
+function readTemps(){return POINTS.map(function(p){var el=document.getElementById("tin-"+p.id),v=el?parseFloat(String(el.value).replace(",",".")):NaN;return {p:p,v:isFinite(v)?v:null}})}
+function idw(x,z,vals){var sw=0,s=0;for(var i=0;i<vals.length;i++){var o=vals[i],d2=(x-o.p.x)*(x-o.p.x)+(z-o.p.z)*(z-o.p.z);if(d2<1e-4)return o.v;var w=1/(d2*d2);sw+=w;s+=w*o.v}return s/sw}
+var RAMP=[[23,[43,89,195]],[27,[54,167,201]],[30,[157,211,107]],[33,[244,208,63]],[36,[240,138,36]],[39,[215,48,31]]];
+function rampColor(T){
+  if(T<=RAMP[0][0])return RAMP[0][1].slice();
+  for(var i=0;i<RAMP.length-1;i++){var a=RAMP[i],b=RAMP[i+1];if(T<=b[0]){var k=(T-a[0])/(b[0]-a[0]);return [0,1,2].map(function(j){return Math.round(a[1][j]+(b[1][j]-a[1][j])*k)})}}
+  return RAMP[RAMP.length-1][1].slice();
+}
+function rgb(c){return "rgb("+c[0]+","+c[1]+","+c[2]+")"}
+function fmt(v){return v.toFixed(1).replace(".",",")}
+
+/* ---- Panel ---- */
+var TOOLS={1:"#traffic",2:"#water",3:"#waste",4:"#zertteu",6:"#green",7:"#energy"};
+var panel=$("#panel"), current=null, mode="model", api=null;
+function renderPanel(focus){
+  if(current==null){
+    panel.innerHTML='<div><p class="eyebrow">Аулада 8 тақырып</p><h2 class="p-title" tabindex="-1" style="margin-top:8px">Нөмірді таңда</h2></div>'+
+      '<p class="p-lead">Әр тақырып мектеп ауласының бір бөлігінде орналасқан. Макетті айналдырып, керек нүктені бас.</p>'+
+      '<ol class="t-index">'+TOPICS.map(function(t){return '<li><button type="button" class="t-row" data-topic="'+t.n+'"><span class="num">'+t.n+'</span><span><span class="t-name">'+t.title+'</span><span class="t-where">'+t.where+'</span></span></button></li>'}).join("")+'</ol>';
+  }else{
+    var t=TOPICS[current-1], prev=TOPICS[(current+6)%8], next=TOPICS[current%8];
+    panel.innerHTML='<div class="p-nav"><button type="button" class="p-back" data-home>← Барлық тақырыптар</button><span class="p-count">'+t.n+' / 8</span></div>'+
+      '<div><p class="eyebrow">Тақырып '+t.n+' · '+t.where+'</p><h2 class="p-title" tabindex="-1" style="margin-top:8px">'+t.title+'</h2></div>'+
+      '<dl class="p-dl"><div><dt>Ақпарат пен материалдар</dt><dd>'+t.info+'</dd></div><div><dt>Зерттеу тапсырмасы</dt><dd>'+t.task+'</dd></div><div><dt>Өнім</dt><dd>'+t.product+'</dd></div>'+
+      (t.note?'<div class="note"><dt>Ескерту</dt><dd>'+t.note+'</dd></div>':'')+'</dl>'+
+      (TOOLS[t.n]?'<a class="btn btn-ghost" href="'+TOOLS[t.n]+'" style="align-self:flex-start">Зертханада ашу</a>':'')+
+      (t.n===4?'<button type="button" class="btn btn-primary" data-thermal style="justify-self:start;align-self:flex-start">'+(mode==="thermal"?"Жылу картасы қосулы":"Жылу картасын қосу")+'</button>':'')+
+      '<div class="p-foot"><button type="button" class="p-step" data-topic="'+prev.n+'">← '+prev.n+'</button><button type="button" class="p-step" data-topic="'+next.n+'">'+next.n+' →</button></div>';
+  }
+  panel.scrollTop=0;
+  if(focus){var h=$(".p-title",panel);if(h)h.focus({preventScroll:true})}
+  if(api)api.sync();
+}
+function select(n,opt){opt=opt||{};current=n;renderPanel(opt.focus);if(api)api.focusTopic(n)}
+function goHome(focus){current=null;renderPanel(focus);if(api)api.home()}
+function setMode(m){
+  mode=m;$("#modeModel").setAttribute("aria-pressed",m==="model");$("#modeThermal").setAttribute("aria-pressed",m==="thermal");
+  $("#legend").hidden=m!=="thermal";if(api)api.setThermal(m==="thermal");
+  if(current===4)renderPanel(false);
+}
+function toStage(){$("#maket").scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"})}
+panel.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  if(b.dataset.topic)select(+b.dataset.topic,{focus:true});
+  else if("home" in b.dataset)goHome(true);
+  else if("thermal" in b.dataset)setMode("thermal");
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&current!=null&&panel.contains(document.activeElement))goHome(true)});
+$("#modeModel").addEventListener("click",function(){setMode("model")});
+$("#modeThermal").addEventListener("click",function(){setMode("thermal")});
+$("#homeBtn").addEventListener("click",function(){goHome(false)});
+$$("[data-show]").forEach(function(b){b.addEventListener("click",function(){setMode("model");select(+b.dataset.show);toStage()})});
+$$("[data-thermal-go]").forEach(function(b){b.addEventListener("click",function(){setMode("thermal");select(4);toStage()})});
+
+/* ---- Data table + dot plot (student's own measurements) ---- */
+var tbody=$("#dataBody"), plot=$("#plot"), psum=$("#psum"), saved=store.temps||{};
+tbody.innerHTML=POINTS.map(function(p){return '<tr><td class="m">'+p.id+'</td><td>'+p.name+'</td><td><input id="tin-'+p.id+'" type="number" inputmode="decimal" step="0.1" placeholder="—" value="'+(saved[p.id]!=null?saved[p.id]:"")+'" aria-label="'+p.id+' температурасы, °C"></td></tr>'}).join("");
+["mDate","mTime","mTool"].forEach(function(id){var el=document.getElementById(id);if(!el)return;if(store[id])el.value=store[id];el.addEventListener("input",function(){store[id]=el.value;save()})});
+function drawPlot(){
+  var vals=readTemps(), ok=vals.filter(function(o){return o.v!==null});
+  store.temps={};ok.forEach(function(o){store.temps[o.p.id]=o.v});save();
+  var lo=20, hi=40;
+  ok.forEach(function(o){lo=Math.min(lo,o.v);hi=Math.max(hi,o.v)});
+  lo=Math.floor(lo/5)*5;hi=Math.ceil(hi/5)*5;if(hi===lo)hi=lo+5;
+  var n=(hi-lo)/5, pct=function(v){return (v-lo)/(hi-lo)*100}, h="";
+  vals.forEach(function(o){
+    h+='<div class="prow"><span class="pid">'+o.p.id+'</span><div class="ptrack" style="--n:'+n+'">';
+    if(o.v!==null){var x=pct(o.v);h+='<i class="pdot" style="left:'+x.toFixed(2)+'%;--c:'+rgb(rampColor(o.v))+'"></i><span class="pval'+(x>78?" flip":"")+'" style="left:'+x.toFixed(2)+'%">'+fmt(o.v)+'°</span>'}
+    h+='</div></div>';
+  });
+  h+='<div class="prow"><span class="pid">°C</span><div class="paxis">';
+  for(var i=0;i<=n;i++)h+='<span style="left:'+(i/n*100).toFixed(2)+'%">'+(lo+i*5)+'</span>';
+  plot.innerHTML=h+'</div></div>';
+  if(ok.length<2){psum.textContent=ok.length?"Тағы бір нүктенің өлшемін енгіз: талдау екі мәннен басталады.":"Өлшеу нәтижелерін кестеге енгіз. Екі мән енгізілгенде талдау шығады.";}
+  else{
+    var mx=ok.reduce(function(a,b){return b.v>a.v?b:a}), mn=ok.reduce(function(a,b){return b.v<a.v?b:a}), avg=ok.reduce(function(a,b){return a+b.v},0)/ok.length;
+    var s="Ең жылы нүкте: <b>"+mx.p.id+"</b> ("+fmt(mx.v)+" °C). Ең салқын нүкте: <b>"+mn.p.id+"</b> ("+fmt(mn.v)+" °C). Айырмашылық: <b>"+fmt(mx.v-mn.v)+" °C</b>. Орташа: "+fmt(avg)+" °C.";
+    if(vals[2].v!==null&&vals[4].v!==null)s+=" Ашық көгал (T3) мен көлеңке (T5) арасы: <b>"+fmt(Math.abs(vals[2].v-vals[4].v))+" °C</b>.";
+    psum.innerHTML=s;
+  }
+  if(api)api.refreshThermal();
+}
+tbody.addEventListener("input",drawPlot);
+$("#resetData").addEventListener("click",function(){POINTS.forEach(function(p){document.getElementById("tin-"+p.id).value=""});drawPlot()});
+drawPlot();
+
+/* ---- Tilt cards ---- */
+if(!reduced&&matchMedia("(hover:hover) and (pointer:fine)").matches){
+  $$("[data-tilt]").forEach(function(el){
+    el.addEventListener("pointermove",function(e){var r=el.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-0.5,py=(e.clientY-r.top)/r.height-0.5;
+      el.style.transform="perspective(900px) rotateX("+(-py*7).toFixed(2)+"deg) rotateY("+(px*9).toFixed(2)+"deg) translateZ(0)"});
+    el.addEventListener("pointerleave",function(){el.style.transform=""});
+  });
+}
+
+renderPanel(false);
+
+/* ---- Procedural textures ---- */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function makeYard(){
+  var C=1024,k=C/20,c=document.createElement("canvas");c.width=c.height=C;var g=c.getContext("2d"),R=rng(7);
+  var X=function(x){return (x+10)*k},Y=function(z){return (z+10)*k};
+  function rect(x0,x1,z0,z1){g.fillRect(X(x0),Y(z0),(x1-x0)*k,(z1-z0)*k)}
+  g.fillStyle="#79b363";g.fillRect(0,0,C,C);
+  for(var i=0;i<20;i+=2){g.fillStyle="rgba(255,255,255,0.04)";g.fillRect(0,i*k,C,k)}
+  var gs=["#6aa656","#86bf6c","#72ad5c","#90c776","#5f9c4f"];g.globalAlpha=.55;
+  for(i=0;i<5200;i++){g.fillStyle=gs[(R()*gs.length)|0];g.beginPath();g.arc(R()*C,R()*C,1+R()*3.2,0,6.283);g.fill()}
+  g.globalAlpha=1;
+  // trampled bare patch
+  g.fillStyle="#b99a6b";g.beginPath();
+  for(var a=0;a<=6.3;a+=0.15){var r=2*k*(0.85+0.18*Math.sin(3*a+1)+0.08*Math.sin(7*a));var px=X(3.2)+Math.cos(a)*r,py=Y(-5.4)+Math.sin(a)*r;a?g.lineTo(px,py):g.moveTo(px,py)}
+  g.fill();g.fillStyle="#a6865a";for(i=0;i<260;i++){var aa=R()*6.28,rr=Math.sqrt(R())*1.6*k;g.fillRect(X(3.2)+Math.cos(aa)*rr,Y(-5.4)+Math.sin(aa)*rr,2,2)}
+  // pond sand ring
+  g.fillStyle="#d8c79c";g.beginPath();g.arc(X(-5),Y(5.6),2.75*k,0,6.283);g.fill();
+  // school apron, bin pad, weather plot
+  g.fillStyle="#bdb7a8";rect(-9.3,0.3,-8.3,-2.7);rect(4.3,6.35,-2.05,-1.15);
+  g.fillStyle="#e6dfcd";rect(0.5,1.9,-2.9,-1.5);g.strokeStyle="#ffffff";g.lineWidth=2;g.strokeRect(X(0.5),Y(-2.9),1.4*k,1.4*k);
+  // paths
+  g.fillStyle="#d9cdb0";rect(-8.6,6.55,-0.55,0.55);rect(-5.1,-3.9,-3,0.55);rect(-5.4,-4.6,0.55,3.3);
+  g.strokeStyle="rgba(110,92,60,.25)";g.lineWidth=1;
+  for(var x=-8.6;x<6.55;x+=0.5){g.beginPath();g.moveTo(X(x),Y(-0.55));g.lineTo(X(x),Y(0.55));g.stroke()}
+  for(var z=-3;z<0.55;z+=0.5){g.beginPath();g.moveTo(X(-5.1),Y(z));g.lineTo(X(-3.9),Y(z));g.stroke()}
+  for(z=0.55;z<3.3;z+=0.5){g.beginPath();g.moveTo(X(-5.4),Y(z));g.lineTo(X(-4.6),Y(z));g.stroke()}
+  // sidewalk + road
+  g.fillStyle="#cfccc3";rect(6.55,7,-10,10);
+  g.fillStyle="#3b4246";rect(7,10,-10,10);
+  for(i=0;i<1600;i++){g.fillStyle=R()<.5?"#454c50":"#33393c";g.fillRect(X(7)+R()*3*k,R()*C,2,2)}
+  g.fillStyle="#f1d264";for(z=-10;z<10;z+=1.6){if(z>-1.6&&z<0.7)continue;rect(8.44,8.56,z,z+0.9)}
+  g.fillStyle="#f4f4ef";for(x=7.15;x<9.9;x+=0.55)rect(x,x+0.3,-0.6,0.6);
+  return c;
+}
+function makeThermal(vals){
+  var N=256,c=document.createElement("canvas");c.width=c.height=N;var g=c.getContext("2d"),img=g.createImageData(N,N),d=img.data,band=new Int16Array(N*N),i,j;
+  for(j=0;j<N;j++){var z=(j+0.5)/N*20-10;for(i=0;i<N;i++)band[j*N+i]=Math.floor(idw((i+0.5)/N*20-10,z,vals))}
+  for(j=0;j<N;j++)for(i=0;i<N;i++){var b=band[j*N+i],col=rampColor(b+0.5),f=((i<N-1&&band[j*N+i+1]!==b)||(j<N-1&&band[(j+1)*N+i]!==b))?0.72:1,o=(j*N+i)*4;
+    d[o]=col[0]*f;d[o+1]=col[1]*f;d[o+2]=col[2]*f;d[o+3]=255}
+  g.putImageData(img,0,0);
+  var k=N/20,X=function(x){return (x+10)*k},Y=function(z){return (z+10)*k};
+  g.strokeStyle="rgba(15,20,25,.45)";g.lineWidth=1;
+  g.beginPath();g.moveTo(X(7),0);g.lineTo(X(7),N);g.stroke();
+  g.beginPath();g.arc(X(-5),Y(5.6),2.4*k,0,6.283);g.stroke();
+  g.strokeRect(X(-8.6),Y(-0.55),15.15*k,1.1*k);
+  g.setLineDash([4,3]);g.strokeRect(X(-9),Y(-8),9*k,5*k);
+  return c;
+}
+function makeStrata(){
+  var W=1024,H=200,c=document.createElement("canvas");c.width=W;c.height=H;var g=c.getContext("2d"),R=rng(11),x,i;
+  var b1=function(x){return H*0.30+Math.sin(x*0.021)*4+Math.sin(x*0.067+1)*2.5};
+  var b2=function(x){return H*0.66+Math.sin(x*0.017+2)*5+Math.sin(x*0.053)*3};
+  g.fillStyle="#8a867d";g.fillRect(0,0,W,H);
+  g.fillStyle="#ad7a43";g.beginPath();g.moveTo(0,0);for(x=0;x<=W;x+=8)g.lineTo(x,b2(x));g.lineTo(W,0);g.closePath();g.fill();
+  g.fillStyle="#4e3423";g.beginPath();g.moveTo(0,0);for(x=0;x<=W;x+=8)g.lineTo(x,b1(x));g.lineTo(W,0);g.closePath();g.fill();
+  var rc=["#77736b","#9d998f","#6b675f"];
+  for(i=0;i<150;i++){x=R()*W;var top=b2(x)+5,y=top+R()*(H-top),r=3+R()*7;g.fillStyle=rc[(R()*3)|0];g.beginPath();
+    for(var p=0;p<5;p++){var a=p/5*6.283+R()*.5,rr=r*(.7+R()*.4);p?g.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr):g.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}g.fill()}
+  var pc=["#956434","#c19160","#7f552d"];
+  for(i=0;i<280;i++){x=R()*W;var y0=b1(x)+3,y1=b2(x)-3;g.fillStyle=pc[(R()*3)|0];g.beginPath();g.ellipse(x,y0+R()*(y1-y0),1.2+R()*2.6,1+R()*2,R()*3,0,6.283);g.fill()}
+  for(i=0;i<420;i++){x=R()*W;g.fillStyle=R()<.5?"#3d2819":"#6a4a32";g.fillRect(x,R()*b1(x),2,2)}
+  g.strokeStyle="rgba(214,180,140,.55)";
+  for(i=0;i<46;i++){x=R()*W;var yy=0,lim=b1(x)+8;g.lineWidth=1+R()*.8;g.beginPath();g.moveTo(x,0);while(yy<lim){yy+=3+R()*4;x+=(R()-.5)*5;g.lineTo(x,yy)}g.stroke()}
+  return c;
+}
+
+/* ---- 3D scene ---- */
+function init3D(){
+  if(!window.THREE||!THREE.OrbitControls)throw new Error("three.js not loaded");
+  var view=$("#stageView"),canvas=$("#scene"),labels=$("#labels");
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.setClearColor(0,0);
+  var scene=new THREE.Scene(),world=new THREE.Group();scene.add(world);
+  var camera=new THREE.PerspectiveCamera(30,1,0.5,400);
+  var controls=new THREE.OrbitControls(camera,canvas);
+  controls.enableDamping=true;controls.dampingFactor=0.08;controls.enablePan=false;controls.enableZoom=false;
+  controls.minPolarAngle=0.25;controls.maxPolarAngle=1.48;controls.rotateSpeed=0.7;
+  controls.autoRotate=!reduced;controls.autoRotateSpeed=0.45;
+
+  var hemi=new THREE.HemisphereLight(0xdcebff,0x56664a,0.7);scene.add(hemi);
+  var sun=new THREE.DirectionalLight(0xfff0d4,0.9);sun.position.set(14,24,10);sun.castShadow=true;
+  sun.shadow.mapSize.set(2048,2048);var sc=sun.shadow.camera;sc.left=-17;sc.right=17;sc.top=17;sc.bottom=-17;sc.near=2;sc.far=70;sc.updateProjectionMatrix();
+  sun.shadow.bias=-0.0006;sun.shadow.normalBias=0.03;scene.add(sun);
+
+  var cache={};
+  function M(color,o){if(!o&&cache[color])return cache[color];var m=new THREE.MeshStandardMaterial(Object.assign({color:color,roughness:0.85,metalness:0,flatShading:true},o||{}));if(!o)cache[color]=m;return m}
+  function add(parent,geo,mat,x,y,z,noCast){var m=new THREE.Mesh(geo,mat);m.position.set(x||0,y||0,z||0);m.castShadow=!noCast;m.receiveShadow=true;parent.add(m);return m}
+  var Box=function(a,b,c){return new THREE.BoxGeometry(a,b,c)};
+
+  // ground + soil + plinth
+  var yardTex=new THREE.CanvasTexture(makeYard());yardTex.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+  var thermTex=null;
+  var topMat=new THREE.MeshStandardMaterial({map:yardTex,roughness:1,metalness:0});
+  var gs=M(0x4d8a3c),asp=M(0x3b4246);
+  var ground=new THREE.Mesh(Box(20,0.35,20),[asp,gs,topMat,gs,gs,gs]);ground.position.y=-0.175;ground.receiveShadow=true;world.add(ground);
+  var strataTex=new THREE.CanvasTexture(makeStrata());
+  var strataMat=new THREE.MeshStandardMaterial({map:strataTex,roughness:1});
+  var soil=new THREE.Mesh(Box(20,3.8,20),[strataMat,strataMat,M(0x5f5b55),M(0x5f5b55),strataMat,strataMat]);soil.position.y=-2.25;world.add(soil);
+  add(world,Box(21.2,0.4,21.2),M(0x2a3330),0,-4.35,0,true);
+
+  // school
+  var windowMat=new THREE.MeshStandardMaterial({color:0x7fb2d6,roughness:0.25,metalness:0.1});
+  add(world,Box(9,3.2,5),M(0xede6d6),-4.5,1.6,-5.5);
+  add(world,Box(9.3,0.22,5.3),M(0x6b7279),-4.5,3.31,-5.5);
+  add(world,Box(9.04,0.12,5.04),M(0xc86b3c),-4.5,1.68,-5.5,true);
+  var wg=Box(0.72,0.82,0.06),wgs=Box(0.06,0.82,0.72);
+  [0.95,2.4].forEach(function(fy){
+    for(var i=0;i<7;i++){var x=-8.1+i*1.2;if(fy<1.5&&Math.abs(x+4.5)<0.7)continue;add(world,wg,windowMat,x,fy,-2.98,true)}
+    [-7.2,-5.5,-3.8].forEach(function(z){add(world,wgs,windowMat,0.02,fy,z,true)});
+  });
+  add(world,Box(1.3,1.8,0.08),M(0x2f4a63),-4.5,0.9,-2.97,true);
+  add(world,Box(2.2,0.12,0.9),M(0x55606a),-4.5,2.0,-2.55);
+  var panelMat=new THREE.MeshStandardMaterial({color:0x1d3a78,roughness:0.35,metalness:0.5,flatShading:true});
+  [-7.7,-5.9,-4.1,-2.3].forEach(function(px){[-6.8,-4.8].forEach(function(pz){
+    var g=new THREE.Group();g.position.set(px,3.75,pz);g.rotation.x=0.42;add(g,Box(1.55,0.06,1.2),panelMat);world.add(g);
+    add(world,Box(0.08,0.35,0.08),M(0x9aa1a7),px,3.55,pz-0.3,true);
+  })});
+  [[-7.6,-2.5],[-6.4,-2.5],[-2.6,-2.5],[-1.4,-2.5]].forEach(function(p){var b=add(world,new THREE.IcosahedronGeometry(0.45,0),M(0x3d8a48),p[0],0.25,p[1]);b.scale.set(1,0.65,1)});
+
+  // wind turbine
+  var white=M(0xf2f2ee),tur=new THREE.Group();tur.position.set(4.6,0,-8.2);world.add(tur);
+  add(tur,new THREE.CylinderGeometry(0.09,0.17,6.4,10),white,0,3.2,0);
+  add(tur,Box(0.36,0.36,0.9),white,0,6.5,0.1);
+  var rotor=new THREE.Group();rotor.position.set(0,6.5,0.62);tur.add(rotor);
+  add(rotor,new THREE.IcosahedronGeometry(0.18,1),white);
+  for(var k=0;k<3;k++){var arm=new THREE.Group();arm.rotation.z=k*2.094;add(arm,Box(0.16,2.6,0.05),white,0,1.3,0);rotor.add(arm)}
+
+  // weather station
+  var ws=new THREE.Group();ws.position.set(1.2,0,-2.2);world.add(ws);
+  add(ws,new THREE.CylinderGeometry(0.05,0.05,2.9,8),M(0x8a9399),0,1.45,0);
+  add(ws,Box(0.62,0.6,0.5),white,-0.45,1.35,0);
+  add(ws,Box(0.05,1.05,0.05),M(0x8a9399),-0.45,0.52,0);
+  var anemo=new THREE.Group();anemo.position.set(0,2.95,0);ws.add(anemo);
+  for(k=0;k<3;k++){var ag=new THREE.Group();ag.rotation.y=k*2.094;add(ag,Box(0.7,0.03,0.03),M(0x8a9399),0.35,0,0);add(ag,new THREE.SphereGeometry(0.09,8,6),white,0.7,0,0);anemo.add(ag)}
+
+  // bins
+  [[4.7,0x2f6fd0],[5.35,0xf2c230],[6.0,0x3a9a55]].forEach(function(b){add(world,Box(0.5,0.75,0.5),M(b[1]),b[0],0.375,-1.6);add(world,Box(0.56,0.08,0.56),M(0x3a4148),b[0],0.79,-1.6)});
+
+  // benches
+  var wood=M(0xa8763e),dark=M(0x3f474d);
+  [-1.6,1.0].forEach(function(x){add(world,Box(1.4,0.1,0.45),wood,x,0.45,1.25);add(world,Box(1.4,0.4,0.08),wood,x,0.75,1.47);
+    add(world,Box(0.08,0.45,0.4),dark,x-0.6,0.22,1.25);add(world,Box(0.08,0.45,0.4),dark,x+0.6,0.22,1.25)});
+
+  // lamps
+  var lampMat=new THREE.MeshStandardMaterial({color:0xfff3d0,emissive:0x000000,roughness:0.4}),lamps=[];
+  [-5.6,6.2].forEach(function(z){add(world,new THREE.CylinderGeometry(0.05,0.07,3.2,8),dark,6.75,1.6,z);add(world,Box(0.6,0.05,0.05),dark,7.0,3.15,z);
+    add(world,Box(0.32,0.1,0.18),lampMat,7.25,3.1,z,true);var pl=new THREE.PointLight(0xffd27a,0,9,2);pl.position.set(7.25,2.9,z);world.add(pl);lamps.push(pl)});
+
+  // trees
+  var trunk=M(0x7a5536),leaves=[0x3f8f4a,0x52a256,0x2f7a46,0x66ad58].map(function(c){return M(c)}),pineM=M(0x2c6e46),sway=[];
+  TREES.forEach(function(t,i){
+    var g=new THREE.Group(),s=t.s;g.position.set(t.x,0,t.z);world.add(g);
+    var crown=new THREE.Group();g.add(crown);
+    if(t.k==="d"){add(g,new THREE.CylinderGeometry(0.11*s,0.16*s,1.3*s,7),trunk,0,0.65*s,0);crown.position.y=1.3*s;var lm=leaves[i%4];
+      add(crown,new THREE.IcosahedronGeometry(0.95*s,0),lm,0,0.55*s,0);add(crown,new THREE.IcosahedronGeometry(0.62*s,0),lm,0.45*s,0.25*s,0.2*s);add(crown,new THREE.IcosahedronGeometry(0.55*s,0),lm,-0.4*s,0.35*s,-0.25*s);}
+    else{add(g,new THREE.CylinderGeometry(0.09*s,0.13*s,0.9*s,6),trunk,0,0.45*s,0);
+      add(crown,new THREE.ConeGeometry(0.95*s,1.6*s,7),pineM,0,1.5*s,0);add(crown,new THREE.ConeGeometry(0.72*s,1.3*s,7),pineM,0,2.3*s,0);add(crown,new THREE.ConeGeometry(0.48*s,1.0*s,7),pineM,0,2.95*s,0);}
+    sway.push({o:crown,p:i*1.7});
+  });
+
+  // pond, reeds, ripples
+  var water=new THREE.Mesh(new THREE.CircleGeometry(2.4,48),new THREE.MeshStandardMaterial({color:0x3e93cc,roughness:0.15,metalness:0.15,transparent:true,opacity:0.95}));
+  water.rotation.x=-Math.PI/2;water.position.set(-5,0.03,5.6);water.receiveShadow=true;world.add(water);
+  for(k=0;k<10;k++){var a=k*0.63+0.3,h=0.6+(k%3)*0.2;add(world,new THREE.CylinderGeometry(0.025,0.035,h,5),M(0x6b8f3c),-5+Math.cos(a)*2.5,h/2,5.6+Math.sin(a)*2.5)}
+  var ringGeo=new THREE.RingGeometry(0.9,1,40);ringGeo.rotateX(-Math.PI/2);var rings=[];
+  for(k=0;k<4;k++){var rm=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0,depthWrite:false}));rm.position.y=0.05;rm.visible=false;world.add(rm);rings.push({m:rm,life:9})}
+
+  // cloud + rain
+  var cloudMat=M(0xffffff,{roughness:1}),cloud=new THREE.Group();cloud.position.set(-5,8.2,5.6);world.add(cloud);
+  [[0,0,0,1.3],[1.2,-0.2,0.2,1],[-1.2,-0.15,-0.1,1.05],[0.4,0.55,-0.3,0.95],[-0.5,0.4,0.5,0.8],[0.2,-0.3,0.9,0.75]].forEach(function(c){add(cloud,new THREE.IcosahedronGeometry(c[3],1),cloudMat,c[0],c[1],c[2])});
+  var dropGeo=Box(0.035,0.32,0.035),dropMat=new THREE.MeshBasicMaterial({color:0x8cc6ee,transparent:true,opacity:0.75}),drops=[],R=rng(3);
+  function resetDrop(d,y){var a=R()*6.283,r=Math.sqrt(R())*1.5;d.ox=Math.cos(a)*r;d.oz=Math.sin(a)*r;d.m.position.set(cloud.position.x+d.ox,y,5.6+d.oz)}
+  for(k=0;k<36;k++){var dm=new THREE.Mesh(dropGeo,dropMat);world.add(dm);var dd={m:dm};resetDrop(dd,0.2+R()*7);drops.push(dd)}
+
+  // cars + exhaust
+  var headMat=new THREE.MeshStandardMaterial({color:0xfff6d8,emissive:0x000000});
+  function makeCar(color){var g=new THREE.Group();add(g,Box(0.95,0.42,1.9),M(color,{roughness:0.5}),0,0.36,0);add(g,Box(0.82,0.36,1.0),M(0x26323c,{roughness:0.3}),0,0.75,-0.1);
+    var wgeo=new THREE.CylinderGeometry(0.17,0.17,0.12,12),wm=M(0x1b1e21);
+    [-0.47,0.47].forEach(function(sx){[-0.6,0.62].forEach(function(sz){var w=add(g,wgeo,wm,sx,0.17,sz);w.rotation.z=Math.PI/2})});
+    add(g,Box(0.2,0.1,0.04),headMat,-0.3,0.42,0.96,true);add(g,Box(0.2,0.1,0.04),headMat,0.3,0.42,0.96,true);world.add(g);return g}
+  var cars=[{g:makeCar(0xd9473b),x:7.85,dir:1,v:2.3,z:-6},{g:makeCar(0xf2f1ec),x:7.85,dir:1,v:2.3,z:2.5},{g:makeCar(0x2a9d8f),x:9.15,dir:-1,v:1.8,z:0}];
+  cars.forEach(function(c){c.g.position.set(c.x,0,c.z);if(c.dir<0)c.g.rotation.y=Math.PI;c.timer=Math.random()*0.3});
+  var puffGeo=new THREE.IcosahedronGeometry(0.16,0),puffs=[],puffIdx=0;
+  for(k=0;k<24;k++){var pm=new THREE.Mesh(puffGeo,new THREE.MeshStandardMaterial({color:0xa7aeb2,transparent:true,opacity:0,depthWrite:false,flatShading:true}));pm.visible=false;world.add(pm);puffs.push({m:pm,life:0,max:2,vx:0})}
+
+  // heat-map posts
+  var thermalGroup=new THREE.Group();thermalGroup.visible=false;world.add(thermalGroup);
+  POINTS.forEach(function(p){add(thermalGroup,new THREE.CylinderGeometry(0.04,0.04,1.2,6),white,p.x,0.6,p.z);p.sphere=add(thermalGroup,new THREE.SphereGeometry(0.14,10,8),new THREE.MeshStandardMaterial({color:0x9aa1a7,flatShading:true}),p.x,1.25,p.z)});
+
+  // HTML labels
+  var items=[];
+  TOPICS.forEach(function(t){var w=document.createElement("div");w.className="pin";
+    w.innerHTML='<button type="button" class="pin-in" data-topic="'+t.n+'" aria-label="'+t.n+'. '+t.title+'"><span class="num">'+t.n+'</span><span class="lbl">'+t.short+'</span></button>';
+    labels.appendChild(w);items.push({el:w,pos:new THREE.Vector3(t.pin[0],t.pin[1],t.pin[2]),n:t.n})});
+  POINTS.forEach(function(p){var w=document.createElement("div");w.className="tpin";
+    w.innerHTML='<span class="tp-in"><i></i>'+p.id+' <em>—</em></span>';p.lab=w.firstChild;
+    labels.appendChild(w);items.push({el:w,pos:new THREE.Vector3(p.x,1.45,p.z)})});
+  [["Шым",-0.17],["Қарашірікті қабат",-0.92],["Аралық қабат",-2.17],["Аналық тау жынысы",-3.5]].forEach(function(s){var w=document.createElement("div");w.className="spin";
+    w.innerHTML='<span class="sp-in">'+s[0]+'</span>';labels.appendChild(w);items.push({el:w,pos:new THREE.Vector3(3,s[1],10.06)})});
+  labels.addEventListener("click",function(e){var b=e.target.closest("[data-topic]");if(!b)return;select(+b.dataset.topic);
+    if(!matchMedia("(min-width: 901px)").matches)panel.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest"})});
+
+  // sizing + camera
+  var W=1,H=1,overlay=false,tween=null,userMoved=false;
+  var HOME_T=new THREE.Vector3(0,0.8,0),HOME_DIR=new THREE.Vector3(1,0.78,1.1).normalize();
+  function effAspect(){var ew=overlay?W-panel.offsetWidth-14:W;return Math.max(0.4,ew/H)}
+  function homePos(){return HOME_DIR.clone().multiplyScalar(Math.max(48,58/effAspect())).add(HOME_T)}
+  function resize(){
+    W=Math.max(1,view.clientWidth);H=Math.max(1,view.clientHeight);renderer.setSize(W,H,false);
+    camera.aspect=W/H;overlay=matchMedia("(min-width: 901px)").matches;
+    if(overlay)camera.setViewOffset(W,H,(panel.offsetWidth+14)/2,0,W,H);else camera.clearViewOffset();
+    camera.updateProjectionMatrix();
+    if(current==null&&!userMoved){if(tween&&tween.home)tween.p1=homePos();else if(!tween)camera.position.copy(homePos())}
+  }
+  function flyTo(pos,target,dur,isHome){
+    if(reduced){camera.position.copy(pos);controls.target.copy(target);controls.update();return}
+    tween={t0:performance.now(),dur:dur||1300,p0:camera.position.clone(),p1:pos,q0:controls.target.clone(),q1:target.clone(),home:!!isHome};
+  }
+  controls.addEventListener("start",function(){tween=null;userMoved=true;controls.autoRotate=false});
+  resize();new ResizeObserver(resize).observe(view);
+  camera.position.copy(homePos().multiplyScalar(1.35)).add(new THREE.Vector3(0,6,0));controls.target.copy(HOME_T);
+  flyTo(homePos(),HOME_T,2400,true);
+  if(!reduced){world.position.y=-3}
+  var t0=performance.now();
+
+  // theme
+  var mq=matchMedia("(prefers-color-scheme: dark)");
+  function isDark(){var t=document.documentElement.getAttribute("data-theme");return t==="dark"||(t!=="light"&&mq.matches)}
+  function applyTheme(){var d=isDark();
+    hemi.color.set(d?0x2a3a55:0xdcebff);hemi.groundColor.set(d?0x141c18:0x56664a);hemi.intensity=d?0.5:0.7;
+    sun.color.set(d?0x9fb4ff:0xfff0d4);sun.intensity=d?0.4:0.9;
+    windowMat.emissive.set(d?0xffc864:0x000000);windowMat.color.set(d?0x3a3020:0x7fb2d6);
+    lampMat.emissive.set(d?0xffd27a:0x000000);lamps.forEach(function(l){l.intensity=d?1.6:0});
+    headMat.emissive.set(d?0xfff1c0:0x000000);cloudMat.color.set(d?0x8a96a8:0xffffff)}
+  applyTheme();
+  if(mq.addEventListener)mq.addEventListener("change",applyTheme);
+  new MutationObserver(applyTheme).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
+  // loop
+  var visible=true,last=performance.now(),v=new THREE.Vector3(),needle=$("#needle"),ease=function(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2};
+  new IntersectionObserver(function(es){visible=es[0].isIntersecting}).observe(view);
+  function spawnPuff(x,y,z){var p=puffs[puffIdx++%puffs.length];p.m.position.set(x,y,z);p.life=0;p.max=1.8+Math.random()*0.6;p.vx=(Math.random()-.5)*0.3;p.m.visible=true}
+  function frame(now){
+    requestAnimationFrame(frame);
+    if(!visible||document.hidden){last=now;return}
+    var dt=Math.min(0.05,(now-last)/1000),t=now/1000,mv=reduced?0:1;last=now;
+    if(!reduced){var ik=Math.min(1,(now-t0)/1600);world.position.y=-3*(1-(1-Math.pow(1-ik,3)));if(ik>0.6)labels.classList.add("ready")}
+    if(tween){var k=Math.min(1,(now-tween.t0)/tween.dur),e=ease(k);camera.position.lerpVectors(tween.p0,tween.p1,e);controls.target.lerpVectors(tween.q0,tween.q1,e);if(k>=1)tween=null}
+    if(mv){
+      cars.forEach(function(c){c.z+=c.dir*c.v*dt;if(c.z>9.6)c.z=-9.6;if(c.z<-9.6)c.z=9.6;c.g.position.z=c.z;var s=Math.min(1,(9.7-Math.abs(c.z))/0.9);c.g.scale.setScalar(Math.max(0.001,s));
+        c.timer-=dt;if(c.timer<=0&&s>0.6){c.timer=0.3;spawnPuff(c.x+0.25,0.3,c.z-c.dir*1.0)}});
+      puffs.forEach(function(p){if(!p.m.visible)return;p.life+=dt;var k=p.life/p.max;if(k>=1){p.m.visible=false;return}p.m.position.y+=dt*0.7;p.m.position.x+=p.vx*dt;p.m.scale.setScalar(1+k*1.8);p.m.material.opacity=0.5*(1-k)});
+      rotor.rotation.z-=dt*1.5;anemo.rotation.y+=dt*3;
+      cloud.position.x=-5+Math.sin(t*0.25)*0.9;
+      drops.forEach(function(d){d.m.position.y-=dt*9;d.m.position.x=cloud.position.x+d.ox;if(d.m.position.y<0.15){
+        if(Math.random()<0.25){var r=rings.find(function(r){return r.life>=1.2});if(r){r.life=0;r.m.position.x=d.m.position.x;r.m.position.z=d.m.position.z;r.m.visible=true}}
+        resetDrop(d,7.4)}});
+      rings.forEach(function(r){if(!r.m.visible)return;r.life+=dt;var k=r.life/1.2;if(k>=1){r.m.visible=false;return}r.m.scale.setScalar(0.1+k*0.6);r.m.material.opacity=0.6*(1-k)});
+      sway.forEach(function(s){s.o.rotation.z=Math.sin(t*0.8+s.p)*0.03});
+    }
+    controls.update();
+    renderer.render(scene,camera);
+    needle.style.transform="rotate("+(controls.getAzimuthalAngle()*180/Math.PI).toFixed(1)+"deg)";
+    world.updateMatrixWorld();
+    for(var i=0;i<items.length;i++){var it=items[i];v.copy(it.pos).applyMatrix4(world.matrixWorld).project(camera);
+      var off=v.z>1||v.x<-1.2||v.x>1.2||v.y<-1.2||v.y>1.2;
+      it.el.style.transform="translate3d("+((v.x+1)/2*W).toFixed(1)+"px,"+((1-v.y)/2*H).toFixed(1)+"px,0)";
+      it.el.style.zIndex=String(Math.round((1-v.z)*100000));it.el.style.visibility=off?"hidden":""}
+  }
+  if(reduced)labels.classList.add("ready");
+  requestAnimationFrame(frame);
+
+  return {
+    focusTopic:function(n){var t=TOPICS[n-1],tg=new THREE.Vector3(t.view.t[0],t.view.t[1],t.view.t[2]),d=t.view.r*Math.max(1,1.15/effAspect());
+      controls.autoRotate=false;userMoved=true;flyTo(new THREE.Vector3(t.view.d[0],t.view.d[1],t.view.d[2]).normalize().multiplyScalar(d).add(tg),tg)},
+    home:function(){userMoved=false;flyTo(homePos(),HOME_T,1300,true)},
+    setThermal:function(on){thermalGroup.visible=on;api.refreshThermal();api.sync()},
+    refreshThermal:function(){
+      var vals=readTemps().filter(function(o){return o.v!==null}),enough=vals.length>=2;
+      POINTS.forEach(function(p){var o=vals.find(function(q){return q.p===p});var c=o?rampColor(o.v):null;
+        p.sphere.material.color.setRGB(c?c[0]/255:0.6,c?c[1]/255:0.63,c?c[2]/255:0.65);
+        p.lab.style.setProperty("--c",c?rgb(c):"transparent");p.lab.lastChild.textContent=o?fmt(o.v)+"°":"—"});
+      if(mode==="thermal"&&enough){if(thermTex)thermTex.dispose();thermTex=new THREE.CanvasTexture(makeThermal(vals));thermTex.anisotropy=yardTex.anisotropy;topMat.map=thermTex}
+      else topMat.map=yardTex;
+      topMat.needsUpdate=true;
+      $("#lgNote").textContent=enough?"Кестедегі "+vals.length+" өлшемнен құрылды":"Жылу картасы үшін кестеге кемінде 2 өлшем енгіз";
+      $("#lgNote").classList.toggle("warn",!enough)},
+    sync:function(){labels.classList.toggle("thermal",mode==="thermal");labels.classList.toggle("strata",current===5&&mode==="model");
+      items.forEach(function(it){if(it.n)it.el.classList.toggle("active",it.n===current)})}
+  };
+}
+try{api=init3D();api.sync();api.refreshThermal()}catch(err){$("#fallback").hidden=false;$("#toolbar").hidden=true;if(window.console)console.warn(err)}
+})();
+</script>
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+function load(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+function keep(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function num(v){v=parseFloat(String(v).replace(",","."));return isFinite(v)?v:null}
+function f1(v,d){return v.toFixed(d==null?1:d).replace(".",",")}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function confirmBtn(btn,label,action){var t=null,orig=btn.textContent;
+  btn.addEventListener("click",function(){if(btn.dataset.arm){clearTimeout(t);delete btn.dataset.arm;btn.textContent=orig;btn.classList.remove("btn-danger");action();return}
+    btn.dataset.arm="1";btn.textContent=label;btn.classList.add("btn-danger");t=setTimeout(function(){delete btn.dataset.arm;btn.textContent=orig;btn.classList.remove("btn-danger")},3500)})}
+
+/* ---- Water meter diary ---- */
+var W=load("geoeco-water")||{people:"",r:["","","","","","","",""]};
+var wBody=$("wBody");
+wBody.innerHTML=W.r.map(function(v,i){return '<tr><td>'+(i?i+"-күн":"Бастапқы")+'</td><td><input type="number" step="0.001" min="0" inputmode="decimal" data-i="'+i+'" value="'+esc(v)+'" placeholder="—" aria-label="'+(i?i+"-күнгі":"Бастапқы")+' көрсеткіш, м³"></td><td class="out" id="wOut'+i+'">'+(i?"—":"")+'</td></tr>'}).join("");
+$("wPeople").value=W.people;
+function drawWater(){
+  var r=W.r.map(num),days=[];
+  for(var i=1;i<r.length;i++){var o=$("wOut"+i);if(r[i]!==null&&r[i-1]!==null){var l=(r[i]-r[i-1])*1000;o.textContent=f1(l,0);days.push({d:i,l:l})}else o.textContent="—"}
+  var bars=$("wBars"),sum=$("wSum");
+  if(!days.length){bars.innerHTML='<p class="empty-note">Бастапқы көрсеткішті және кемінде бір келесі күнді енгіз. Сол кезде күндік шығын мен диаграмма шығады.</p>';sum.textContent="";return}
+  var bad=days.some(function(x){return x.l<0}),mx=Math.max.apply(null,days.map(function(x){return Math.max(0,x.l)}))||1;
+  bars.innerHTML=days.map(function(x){return '<div class="bar"><span>'+x.d+'-күн</span><div class="tr"><i style="width:'+(Math.max(0,x.l)/mx*100).toFixed(1)+'%;--c:#2a7fbd"></i></div><span>'+f1(x.l,0)+' л</span></div>'}).join("");
+  var tot=days.reduce(function(a,x){return a+x.l},0),avg=tot/days.length,pp=num(W.people),top=days.reduce(function(a,x){return x.l>a.l?x:a});
+  var s="Барлығы: <b>"+f1(tot,0)+" л</b> ("+days.length+" күн). Күніне орта есеппен: <b>"+f1(avg,0)+" л</b>.";
+  if(pp&&pp>0)s+=" Бір адамға күніне: <b>"+f1(avg/pp,0)+" л</b>.";
+  s+=" Ең көп шығын: "+top.d+"-күн. Үнемдеу жоспарын осы күннен баста.";
+  if(bad)s+=" <b>Тексер:</b> кейбір көрсеткіш алдыңғысынан кіші.";
+  sum.innerHTML=s;
+}
+wBody.addEventListener("input",function(e){var i=e.target.dataset.i;if(i==null)return;W.r[+i]=e.target.value;keep("geoeco-water",W);drawWater()});
+$("wPeople").addEventListener("input",function(e){W.people=e.target.value;keep("geoeco-water",W);drawWater()});
+confirmBtn($("wClear"),"Растау: бәрін өшіру",function(){W={people:"",r:["","","","","","","",""]};keep("geoeco-water",W);$("wPeople").value="";[].forEach.call(wBody.querySelectorAll("input"),function(el){el.value=""});drawWater()});
+drawWater();
+
+/* ---- Lighting energy ---- */
+var E=load("geoeco-energy")||[{n:"",w:"",c:"",h:""}];
+var eBody=$("eBody");
+function rowHTML(r,i){return '<tr data-i="'+i+'"><td><input type="text" data-k="n" value="'+esc(r.n)+'" placeholder="мысалы, LED шам" aria-label="Құрал атауы"></td><td><input type="number" min="0" step="1" data-k="w" value="'+esc(r.w)+'" aria-label="Қуаты, Вт"></td><td><input type="number" min="0" step="1" data-k="c" value="'+esc(r.c)+'" aria-label="Саны"></td><td><input type="number" min="0" max="24" step="0.5" data-k="h" value="'+esc(r.h)+'" aria-label="Күніне сағат"></td><td class="out" id="eOut'+i+'">—</td><td><button type="button" class="del" data-del="'+i+'" aria-label="Жолды жою">×</button></td></tr>'}
+function buildE(){eBody.innerHTML=E.map(rowHTML).join("");drawEnergy()}
+function drawEnergy(){
+  var rows=[];E.forEach(function(r,i){var w=num(r.w),c=num(r.c),h=num(r.h),o=$("eOut"+i);if(w!==null&&c!==null&&h!==null){var k=w*c*h/1000;o.textContent=f1(k,2);rows.push({n:r.n||((i+1)+"-құрал"),k:k})}else if(o)o.textContent="—"});
+  var bars=$("eBars"),sum=$("eSum");
+  if(!rows.length){bars.innerHTML='<p class="empty-note">Кемінде бір жолға қуатты, санды және сағатты енгіз. Шамның қуаты оның өзінде немесе қорабында жазылады.</p>';sum.textContent="";return}
+  var tot=rows.reduce(function(a,x){return a+x.k},0),mx=Math.max.apply(null,rows.map(function(x){return x.k}))||1;
+  bars.innerHTML=rows.map(function(x){return '<div class="bar"><span title="'+esc(x.n)+'">'+esc(x.n)+'</span><div class="tr"><i style="width:'+(x.k/mx*100).toFixed(1)+'%;--c:#d2a21d"></i></div><span>'+f1(tot?x.k/tot*100:0,0)+'%</span></div>'}).join("");
+  sum.innerHTML="Күніне: <b>"+f1(tot,2)+" кВт·сағ</b>. Бес күндік оқу аптасында: <b>"+f1(tot*5,1)+" кВт·сағ</b>. Ең көп үлес: "+esc(rows.reduce(function(a,x){return x.k>a.k?x:a}).n)+".";
+}
+eBody.addEventListener("input",function(e){var tr=e.target.closest("tr"),k=e.target.dataset.k;if(!tr||!k)return;E[+tr.dataset.i][k]=e.target.value;keep("geoeco-energy",E);drawEnergy()});
+eBody.addEventListener("click",function(e){var b=e.target.closest("[data-del]");if(!b)return;E.splice(+b.dataset.del,1);if(!E.length)E.push({n:"",w:"",c:"",h:""});keep("geoeco-energy",E);buildE()});
+$("eAdd").addEventListener("click",function(){E.push({n:"",w:"",c:"",h:""});keep("geoeco-energy",E);buildE();var ins=eBody.querySelectorAll('input[data-k="n"]');ins[ins.length-1].focus()});
+confirmBtn($("eClear"),"Растау: бәрін өшіру",function(){E=[{n:"",w:"",c:"",h:""}];keep("geoeco-energy",E);buildE()});
+buildE();
+
+/* ---- Class waste ---- */
+var XT=[["Қағаз","#2f6fd0",1],["Картон, қаптама","#8c6a3f",1],["Пластик","#e0b21f",1],["Шыны","#3a9a55",1],["Металл","#8a9399",1],["Тағам қалдығы","#c0602d",0],["Басқа","#6b5f7a",0]];
+var X=load("geoeco-waste")||{};
+var xBody=$("xBody");
+xBody.innerHTML=XT.map(function(t,i){var h='<tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:'+t[1]+';margin-right:6px"></span>'+t[0]+'</td>';
+  for(var d=0;d<5;d++){var k=i+"-"+d;h+='<td><input type="number" min="0" step="1" inputmode="numeric" data-k="'+k+'" value="'+esc(X[k]||"")+'" placeholder="—" aria-label="'+t[0]+', '+["дүйсенбі","сейсенбі","сәрсенбі","бейсенбі","жұма"][d]+', грамм"></td>'}
+  return h+'<td class="out" id="xTot'+i+'">—</td></tr>'}).join("")+'<tr><td><b>Күн бойынша</b></td>'+[0,1,2,3,4].map(function(d){return '<td class="out" id="xDay'+d+'">—</td>'}).join("")+'<td class="out" id="xAll">—</td></tr>';
+function grams(g){return g>=1000?f1(g/1000,2)+" кг":f1(g,0)+" г"}
+function drawWaste(){
+  var tot=XT.map(function(){return 0}),day=[0,0,0,0,0],dayHas=[0,0,0,0,0],any=false;
+  XT.forEach(function(t,i){for(var d=0;d<5;d++){var v=num(X[i+"-"+d]);if(v!==null){tot[i]+=v;day[d]+=v;dayHas[d]=1;any=true}}});
+  XT.forEach(function(t,i){$("xTot"+i).textContent=tot[i]?grams(tot[i]):"—"});
+  for(var d=0;d<5;d++)$("xDay"+d).textContent=dayHas[d]?grams(day[d]):"—";
+  var all=tot.reduce(function(a,b){return a+b},0);$("xAll").textContent=any?grams(all):"—";
+  var bars=$("xBars"),sum=$("xSum");
+  if(!any||!all){bars.innerHTML='<p class="empty-note">Кемінде бір күннің өлшемін енгіз. Қалдықты таразыға салып, граммен жаз.</p>';sum.textContent="";return}
+  var order=XT.map(function(t,i){return {t:t,g:tot[i]}}).filter(function(o){return o.g>0}).sort(function(a,b){return b.g-a.g});
+  bars.innerHTML=order.map(function(o){return '<div class="bar"><span>'+o.t[0]+'</span><div class="tr"><i style="width:'+(o.g/all*100).toFixed(1)+'%;--c:'+o.t[1]+'"></i></div><span>'+f1(o.g/all*100,0)+'%</span></div>'}).join("");
+  var rec=XT.reduce(function(a,t,i){return a+(t[2]?tot[i]:0)},0),days=dayHas.reduce(function(a,b){return a+b},0);
+  sum.innerHTML="Барлығы: <b>"+grams(all)+"</b> ("+days+" күн). Күніне орта есеппен: <b>"+grams(all/days)+"</b>. Ең үлкен үлес: <b>"+order[0].t[0]+"</b> ("+f1(order[0].g/all*100,0)+"%). Сұрыптап қайта өңдеуге болатын бөлігі (қағаз, картон, пластик, шыны, металл): <b>"+f1(rec/all*100,0)+"%</b>.";
+}
+xBody.addEventListener("input",function(e){var k=e.target.dataset.k;if(!k)return;X[k]=e.target.value;keep("geoeco-waste",X);drawWaste()});
+confirmBtn($("xClear"),"Растау: бәрін өшіру",function(){X={};keep("geoeco-waste",X);[].forEach.call(xBody.querySelectorAll("input"),function(el){el.value=""});drawWaste()});
+drawWaste();
+
+/* ---- Green passport: map + tree list ---- */
+var G=load("geoeco-green")||[];var gMap=$("gMap"),gBody=$("gBody"),hot=-1;
+var COLS="ABCDEFGH";
+gMap.querySelector(".gcols").innerHTML=COLS.split("").map(function(c){return "<span>"+c+"</span>"}).join("");
+gMap.querySelector(".grows").innerHTML=[1,2,3,4,5,6].map(function(r){return "<span>"+r+"</span>"}).join("");
+function cell(t){return COLS[Math.min(7,Math.floor(t.x/12.5))]+(Math.min(5,Math.floor(t.y/16.6667))+1)}
+function setBg(url){gMap.style.backgroundImage=url?'url("'+url+'")':"";gMap.classList.toggle("has-bg",!!url);$("gBgClear").hidden=!url}
+var bg=null;try{bg=localStorage.getItem("geoeco-green-bg")}catch(e){}setBg(bg);
+function saveG(){keep("geoeco-green",G)}
+function buildG(){
+  [].forEach.call(gMap.querySelectorAll(".gtree"),function(b){b.remove()});
+  G.forEach(function(t,i){var b=document.createElement("button");b.type="button";b.className="gtree"+(t.f==="бұта"?" bush":"")+(t.c==="нашар"?" bad":"")+(i===hot?" hot":"");
+    b.style.left=t.x+"%";b.style.top=t.y+"%";b.textContent=i+1;b.dataset.i=i;b.setAttribute("aria-label",(i+1)+"-ағаш, "+(t.sp||"түрі жазылмаған")+", "+cell(t));gMap.appendChild(b)});
+  gBody.innerHTML=G.length?G.map(function(t,i){return '<tr data-i="'+i+'"'+(i===hot?' class="hot"':'')+'><td class="out">'+(i+1)+'</td><td class="out">'+cell(t)+'</td>'+
+    '<td><input type="text" list="gSpecies" data-k="sp" value="'+esc(t.sp||"")+'" placeholder="түрі" aria-label="'+(i+1)+'-ағаштың түрі"></td>'+
+    '<td><select data-k="f" aria-label="Пішіні"><option'+(t.f!=="бұта"?" selected":"")+'>ағаш</option><option'+(t.f==="бұта"?" selected":"")+'>бұта</option></select></td>'+
+    '<td><input type="number" min="0" step="0.5" data-k="h" value="'+esc(t.h||"")+'" aria-label="Биіктігі, м"></td>'+
+    '<td><select data-k="c" aria-label="Жағдайы">'+["жақсы","орташа","нашар"].map(function(c){return "<option"+((t.c||"жақсы")===c?" selected":"")+">"+c+"</option>"}).join("")+'</select></td>'+
+    '<td><button type="button" class="del" data-del="'+i+'" aria-label="'+(i+1)+'-ағашты жою">×</button></td></tr>'}).join("")
+    :'<tr><td colspan="7" style="color:var(--ink-2)">Әзірге ағаш жоқ. Сызбаның керек жерін бас.</td></tr>';
+  drawG();
+}
+function drawG(){
+  var bars=$("gBars"),sum=$("gSum");
+  if(!G.length){bars.innerHTML="";sum.textContent="";return}
+  var sp={},cond={"жақсы":0,"орташа":0,"нашар":0},trees=0,hs=[];
+  G.forEach(function(t){var k=(t.sp||"").trim()||"Түрі жазылмаған";sp[k]=(sp[k]||0)+1;cond[t.c||"жақсы"]++;if(t.f!=="бұта")trees++;var h=num(t.h);if(h!==null)hs.push(h)});
+  var n=G.length,list=Object.keys(sp).map(function(k){return {k:k,c:sp[k]}}).sort(function(a,b){return b.c-a.c});
+  bars.innerHTML='<div class="bar-group">Түрлердің үлесі</div>'+list.map(function(o){return '<div class="bar"><span title="'+esc(o.k)+'">'+esc(o.k)+'</span><div class="tr"><i style="width:'+(o.c/n*100).toFixed(1)+'%;--c:var(--leaf)"></i></div><span>'+o.c+' · '+f1(o.c/n*100,0)+'%</span></div>'}).join("")+
+    '<div class="bar-group">Жағдайы</div>'+[["жақсы","var(--leaf)"],["орташа","#d2a21d"],["нашар","var(--heat)"]].map(function(c){return '<div class="bar"><span>'+c[0]+'</span><div class="tr"><i style="width:'+(cond[c[0]]/n*100).toFixed(1)+'%;--c:'+c[1]+'"></i></div><span>'+cond[c[0]]+' · '+f1(cond[c[0]]/n*100,0)+'%</span></div>'}).join("");
+  var named=list.filter(function(o){return o.k!=="Түрі жазылмаған"}).length;
+  var s="Барлығы: <b>"+n+"</b> ("+trees+" ағаш, "+(n-trees)+" бұта). Түр саны: <b>"+named+"</b>.";
+  if(named)s+=" Ең көп таралған түр: <b>"+esc(list.filter(function(o){return o.k!=="Түрі жазылмаған"})[0].k)+"</b>.";
+  if(hs.length)s+=" Орташа биіктігі: <b>"+f1(hs.reduce(function(a,b){return a+b},0)/hs.length,1)+" м</b>.";
+  if(cond["нашар"])s+=" Күтімді қажет ететін: <b>"+cond["нашар"]+"</b> (картада қызыл).";
+  sum.innerHTML=s;
+}
+gMap.addEventListener("click",function(e){
+  var b=e.target.closest(".gtree");
+  if(b){hot=+b.dataset.i;buildG();var inp=gBody.querySelector('tr[data-i="'+hot+'"] input');if(inp)inp.focus({preventScroll:true});return}
+  var r=gMap.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*100,y=(e.clientY-r.top)/r.height*100;
+  G.push({x:Math.round(x*10)/10,y:Math.round(y*10)/10,sp:"",f:"ағаш",h:"",c:"жақсы"});hot=G.length-1;saveG();buildG();
+  var inp=gBody.querySelector('tr[data-i="'+hot+'"] input');if(inp)inp.focus({preventScroll:true});
+});
+gBody.addEventListener("input",function(e){var tr=e.target.closest("tr"),k=e.target.dataset.k;if(!tr||!k)return;G[+tr.dataset.i][k]=e.target.value;saveG();
+  if(k==="sp"||k==="h"){drawG();var bt=gMap.querySelector('.gtree[data-i="'+tr.dataset.i+'"]');if(bt)bt.setAttribute("aria-label",(+tr.dataset.i+1)+"-ағаш, "+(G[+tr.dataset.i].sp||"түрі жазылмаған"))}else buildG()});
+gBody.addEventListener("click",function(e){var b=e.target.closest("[data-del]");if(!b)return;G.splice(+b.dataset.del,1);hot=-1;saveG();buildG()});
+$("gFile").addEventListener("change",function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var fr=new FileReader();
+  fr.onload=function(){var img=new Image();img.onload=function(){var sc=Math.min(1,1200/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    var url=c.toDataURL("image/jpeg",0.8);setBg(url);var ok=true;try{localStorage.setItem("geoeco-green-bg",url)}catch(err){ok=false}
+    $("gStatus").textContent=ok?"Жоспар жүктелді":"Жоспар көрсетілді, бірақ сақталмады: сурет тым үлкен";};img.src=fr.result};fr.readAsDataURL(f);e.target.value=""});
+$("gBgClear").addEventListener("click",function(){setBg(null);try{localStorage.removeItem("geoeco-green-bg")}catch(e){}$("gStatus").textContent=""});
+confirmBtn($("gClear"),"Растау: барлық ағашты өшіру",function(){G=[];hot=-1;saveG();buildG()});
+buildG();
+
+/* ---- Traffic counter ---- */
+var CT=[["Жеңіл көлік","#2f6fd0"],["Автобус","#e0b21f"],["Жүк көлігі","#c0602d"],["Басқа","#6b5f7a"]];
+var C=load("geoeco-traffic")||{place:"",len:10,run:null,iv:[],hist:[]};
+$("cPlace").value=C.place||"";$("cLen").value=String(C.len||10);
+$("cPad").innerHTML=CT.map(function(t,i){return '<button type="button" class="tc-btn" data-t="'+i+'" style="--c:'+t[1]+'"><i></i><span>'+t[0]+'</span><b id="cCnt'+i+'">0</b></button>'}).join("");
+function saveC(){keep("geoeco-traffic",C)}
+function hhmm(ts){var d=new Date(ts);return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
+function curIdx(){ // ensures intervals exist for the running session, returns current index
+  if(!C.run)return -1;var L=C.run.len*60000,k=Math.floor((Date.now()-C.run.t0)/L);
+  while(C.iv.length<=C.run.base+k){var j=C.iv.length-C.run.base;C.iv.push({t0:C.run.t0+j*L,len:C.run.len,c:[0,0,0,0]})}
+  return C.run.base+k;
+}
+function drawC(){
+  var live=curIdx(),tot=[0,0,0,0];
+  C.iv.forEach(function(v){v.c.forEach(function(n,i){tot[i]+=n})});
+  CT.forEach(function(t,i){$("cCnt"+i).textContent=live>=0?C.iv[live].c[i]:tot[i]});
+  [].forEach.call($("cPad").querySelectorAll(".tc-btn"),function(b){b.disabled=!C.run});
+  $("cStart").textContent=C.run?"Тоқтату":"Бастау";$("cStart").classList.toggle("btn-primary",!C.run);$("cStart").classList.toggle("btn-danger",!!C.run);
+  $("cLen").disabled=!!C.run;$("cUndo").disabled=!C.hist.length;
+  $("cBody").innerHTML=C.iv.length?C.iv.map(function(v,i){var sum=v.c.reduce(function(a,b){return a+b},0);return '<tr'+(i===live?' class="live"':'')+'><td class="out">'+(i+1)+' · '+v.len+' мин</td><td class="out">'+hhmm(v.t0)+'</td>'+v.c.map(function(n){return '<td class="out">'+n+'</td>'}).join("")+'<td class="out"><b>'+sum+'</b></td></tr>'}).join("")
+    :'<tr><td colspan="7" style="color:var(--ink-2)">Әзірге аралық жоқ. «Бастау» батырмасын бас.</td></tr>';
+  var bars=$("cBars"),sumEl=$("cSum"),all=tot.reduce(function(a,b){return a+b},0);
+  if(!all){bars.innerHTML="";sumEl.textContent=C.run?"Санау жүріп жатыр. Өткен көліктің түрін бас.":"";tick();return}
+  var totals=C.iv.map(function(v){return v.c.reduce(function(a,b){return a+b},0)}),mx=Math.max.apply(null,totals)||1;
+  bars.innerHTML='<div class="bar-group">Аралықтар бойынша</div>'+C.iv.map(function(v,i){return '<div class="bar"><span>'+(i+1)+' · '+hhmm(v.t0)+'</span><div class="tr"><i style="width:'+(totals[i]/mx*100).toFixed(1)+'%;--c:var(--accent)"></i></div><span>'+totals[i]+'</span></div>'}).join("")+
+    '<div class="bar-group">Түрлер</div>'+CT.map(function(t,i){return '<div class="bar"><span>'+t[0]+'</span><div class="tr"><i style="width:'+(tot[i]/all*100).toFixed(1)+'%;--c:'+t[1]+'"></i></div><span>'+tot[i]+' · '+f1(tot[i]/all*100,0)+'%</span></div>'}).join("");
+  var mins=C.iv.reduce(function(a,v,i){return a+(i===live?Math.max(1/60,(Date.now()-v.t0)/60000):v.len)},0),peak=totals.indexOf(Math.max.apply(null,totals));
+  sumEl.innerHTML="Барлығы: <b>"+all+"</b> көлік, "+C.iv.length+" аралық ("+f1(mins,0)+" мин)."+(mins>=5?" Сағатына орта есеппен: <b>"+f1(all/mins*60,0)+"</b>.":" Сағаттық көрсеткіш 5 минуттан кейін шығады.")+" Ең көп өткен аралық: <b>"+(peak+1)+"</b> ("+hhmm(C.iv[peak].t0)+", "+totals[peak]+"). Автобус пен жүк көлігінің үлесі: <b>"+f1((tot[1]+tot[2])/all*100,0)+"%</b>.";
+  tick();
+}
+var lastIdx=-2;
+function tick(){
+  if(!C.run){$("cTime").textContent="00:00";$("cInt").textContent=C.iv.length?"Тоқтатылды":"Аралық —";lastIdx=-2;return}
+  var idx=curIdx();if(idx!==lastIdx&&lastIdx!==-2){lastIdx=idx;saveC();drawC();return}lastIdx=idx;
+  var e=Math.floor((Date.now()-C.iv[idx].t0)/1000),L=C.run.len*60;$("cInt").textContent="Аралық "+(idx+1)+" · қалды "+Math.ceil((L-e)/60)+" мин";
+  $("cTime").textContent=("0"+Math.floor(e/60)).slice(-2)+":"+("0"+e%60).slice(-2);
+}
+setInterval(function(){if(C.run)tick()},1000);
+$("cStart").addEventListener("click",function(){
+  if(C.run){curIdx();C.run=null}else{C.len=+$("cLen").value;C.run={t0:Date.now(),len:C.len,base:C.iv.length}}
+  saveC();lastIdx=-2;drawC()});
+$("cPad").addEventListener("click",function(e){var b=e.target.closest(".tc-btn");if(!b||!C.run)return;var i=curIdx(),t=+b.dataset.t;C.iv[i].c[t]++;C.hist.push([i,t]);saveC();
+  b.classList.add("bump");setTimeout(function(){b.classList.remove("bump")},150);drawC()});
+$("cUndo").addEventListener("click",function(){var h=C.hist.pop();if(h&&C.iv[h[0]]&&C.iv[h[0]].c[h[1]]>0)C.iv[h[0]].c[h[1]]--;saveC();drawC()});
+$("cPlace").addEventListener("input",function(e){C.place=e.target.value;saveC()});
+$("cLen").addEventListener("change",function(e){C.len=+e.target.value;saveC()});
+confirmBtn($("cClear"),"Растау: бәрін өшіру",function(){C={place:$("cPlace").value,len:+$("cLen").value,run:null,iv:[],hist:[]};saveC();drawC()});
+drawC();
+
+/* ---- Project passport ---- */
+var TOPIC_NAMES=["Ауа сапасы және көлік","Су ресурстары және суды үнемдеу","Қалдықтар және жауапты тұтыну","Ауа райы және жергілікті микроклимат","Топырақ және жердің жағдайы","Жасыл желек және биоалуантүрлілік","Энергия және ресурс үнемдеу","Тұрақты мектеп және қолайлы орта","Өз тақырыбым"];
+var LEVELS={"7-8":"Бақылау, санау, сипаттау және қарапайым салыстыру.","9":"Пайыз есептеу, диаграмма құру және себеп-салдарды түсіндіру.","10-11":"Әдісті негіздеу, деректерді байланыстыру және шектеулерді бағалау."};
+var STEPS=[["Мәселе","Ауладағы, үйдегі не мектептегі нақты мәселе."],["Зерттеу сұрағы","Жауабын өлшеп не бақылап табуға болатын сұрақ."],["Мақсат","Зерттеу соңында не білгің келеді?"],["Жұмыс жоспары","Уақыты, орны, құралдары, топ міндеттері."],["Әдістер","Бақылау, салыстыру, сауалнама, өлшеу, карталау."],["Жиналған деректер","Кестелер: дереккөз, күні, орны, өлшем бірлігі."],["Шығармашылық өнім","Карта, инфографика, макет не бейнетүсіндірме."],["Қорытынды","Деректерге сүйенген жауап және әдістің шектеулері."],["Бағалау","Өзіндік бағалау, алған кері байланыс, не жетілдірдің."]];
+var P=load("geoeco-passport")||{};
+var sel=$("ppTopic");TOPIC_NAMES.forEach(function(n,i){var o=document.createElement("option");o.value=String(i+1);o.textContent=(i<8?(i+1)+". ":"")+n;sel.appendChild(o)});
+$("ppSteps").innerHTML=STEPS.map(function(s,i){return '<li id="ppLi'+i+'"><label for="pp'+i+'">'+s[0]+'</label><textarea id="pp'+i+'" data-i="'+i+'" placeholder="'+s[1]+'"></textarea></li>'}).join("");
+["ppTopic","ppGrade","ppTeam"].forEach(function(id){if(P[id])$(id).value=P[id]});
+STEPS.forEach(function(s,i){if(P["s"+i])$("pp"+i).value=P["s"+i]});
+function drawPP(){
+  var done=0;STEPS.forEach(function(s,i){var ok=$("pp"+i).value.trim().length>0;$("ppLi"+i).classList.toggle("done",ok);if(ok)done++});
+  $("ppCount").textContent=done+" / 9";$("ppBar").style.width=(done/9*100)+"%";
+  var g=$("ppGrade").value,lv=$("ppLevel");lv.hidden=!g;if(g)lv.innerHTML="<b>"+g.replace("-","–")+" сынып</b>"+LEVELS[g];
+}
+document.getElementById("passport").addEventListener("input",function(e){var t=e.target;if(t.id==="ppTopic"||t.id==="ppGrade"||t.id==="ppTeam")P[t.id]=t.value;else if(t.dataset.i!=null)P["s"+t.dataset.i]=t.value;keep("geoeco-passport",P);drawPP()});
+document.getElementById("passport").addEventListener("change",function(e){var t=e.target;if(t.id){P[t.id]=t.value;keep("geoeco-passport",P);drawPP()}});
+function passportText(){
+  var L=["ЖОБА ПАСПОРТЫ"],tp=$("ppTopic").value,g=$("ppGrade").value;
+  L.push("Тақырып: "+(tp?TOPIC_NAMES[+tp-1]:"—"));L.push("Сынып: "+(g?g.replace("-","–"):"—"));L.push("Топ мүшелері: "+($("ppTeam").value.trim()||"—"));L.push("");
+  STEPS.forEach(function(s,i){L.push((i+1)+". "+s[0]);L.push($("pp"+i).value.trim()||"—");L.push("")});
+  var temps=[].map.call(document.querySelectorAll('[id^="tin-"]'),function(el){return el.value?el.id.slice(4)+": "+el.value+" °C":null}).filter(Boolean);
+  if(temps.length){L.push("Температура өлшемдері ("+(($("mDate")||{}).value||"күні —")+", "+(($("mTime")||{}).value||"уақыты —")+"): "+temps.join("; "))}
+  if($("wSum").textContent)L.push("Су: "+$("wSum").textContent);
+  if($("eSum").textContent)L.push("Энергия: "+$("eSum").textContent);
+  if($("cSum").textContent&&C.iv.length)L.push("Көлік санағы"+(C.place?" ("+C.place+")":"")+": "+$("cSum").textContent);
+  if($("xSum").textContent)L.push("Қалдықтар: "+$("xSum").textContent);
+  if($("gSum").textContent)L.push("Жасыл паспорт: "+$("gSum").textContent);
+  return L.join("\n");
+}
+$("ppCopy").addEventListener("click",function(){var txt=passportText(),st=$("ppStatus");
+  function fallback(){var ta=document.createElement("textarea");ta.value=txt;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}document.body.removeChild(ta);st.textContent=ok?"Көшірілді":"Көшіру мүмкін болмады: мәтінді қолмен белгіле"}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){st.textContent="Көшірілді"},fallback)}else fallback();
+  setTimeout(function(){st.textContent=""},4000)});
+confirmBtn($("ppClear"),"Растау: паспортты өшіру",function(){P={};keep("geoeco-passport",P);["ppTopic","ppGrade","ppTeam"].forEach(function(id){$(id).value=""});STEPS.forEach(function(s,i){$("pp"+i).value=""});drawPP()});
+drawPP();
+})();
+</script>
+</body>
+</html>
