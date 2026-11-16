@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Геоэкологиялық зерттеу платформасы</title>
+<title>Geography — география платформасы</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,6 +40,19 @@
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+/* nature photo behind the whole page; --veil sets how strongly it is faded (0 = photo fully visible, 1 = hidden), --blur how soft it is */
+:root{--veil:.4;--blur:5px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--veil:.62}}
+:root[data-theme="dark"]{--veil:.62}
+body::before{content:"";position:fixed;inset:-24px;z-index:-1;pointer-events:none;background:url("assets/bg-nature.jpg") center 55%/cover no-repeat;filter:blur(var(--blur))}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--bg);opacity:var(--veil)}
+/* frosted panels keep text readable over the photo; --glass is how solid they are */
+:root{--glass:84%}
+.band>.wrap,.hero-head,footer{background:color-mix(in srgb,var(--bg) var(--glass),transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.band>.wrap,.hero-head{border-radius:28px;border:1px solid color-mix(in srgb,var(--line) 70%,transparent);box-shadow:0 20px 50px -30px rgba(16,34,27,.45)}
+.band>.wrap{padding-top:clamp(24px,3.4vw,44px);padding-bottom:clamp(24px,3.4vw,44px)}
+.hero-head{padding-left:clamp(18px,2.4vw,32px);padding-right:clamp(18px,2.4vw,32px);margin-bottom:16px}
+@media (max-width:760px){.band>.wrap{margin-left:8px;margin-right:8px;padding-left:14px;padding-right:14px;border-radius:20px}}
 a{color:inherit} button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 .wrap{max-width:var(--maxw);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -343,8 +356,9 @@ table.calc th{position:relative}
 .tabs a:hover{color:var(--ink)}
 .tabs a[aria-current="page"]{background:var(--ink);color:var(--bg)}
 .tabs .ts{display:none}
-@media (max-width:820px){.nav{flex-wrap:wrap}.tabs{order:3;width:100%;display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between}}
-@media (max-width:520px){.tabs .tl{display:none}.tabs .ts{display:inline}.tabs a{padding:8px 11px;font-size:13.5px}}
+@media (max-width:820px){.nav{flex-wrap:wrap}.tabs{order:3;width:100%;display:grid;grid-template-columns:repeat(6,auto);justify-content:space-between}}
+@media (max-width:700px){.tabs .tl{display:none}.tabs .ts{display:inline}}
+@media (max-width:520px){.tabs{grid-template-columns:repeat(3,minmax(0,1fr));border-radius:18px}.tabs a{padding:8px 6px;font-size:13.5px;text-align:center}}
 .view>.band:first-child{padding-top:clamp(28px,4vw,48px)}
 .hero{padding-bottom:clamp(40px,6vw,72px)}
 .sub{font-size:clamp(17px,1.6vw,20px);margin:clamp(32px,4vw,44px) 0 14px;scroll-margin-top:16px}
@@ -417,6 +431,131 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
 #xTable input{min-width:58px}
 #xTable td:first-child{white-space:nowrap}
 .bar-group{font:600 11px var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin-top:6px}
+/* globe */
+.gstage .legend{width:min(250px,calc(100% - 36px))}
+.gpin{position:absolute;left:0;top:0;width:0;height:0}
+.gpin>button{position:absolute;left:-10px;top:-10px;display:flex;align-items:center;gap:5px;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto;white-space:nowrap;font:600 12px/1.2 var(--f-body)}
+.gdot{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#fff;font:700 10px/1 var(--f-body);border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .15s}
+.gdot.sm{display:inline-grid;width:18px;height:18px;font-size:9px;vertical-align:-4px;border-width:1.5px;box-shadow:none}
+.gtx{padding:2px 7px;border-radius:7px;background:rgba(255,255,255,.92);color:#15241d;box-shadow:0 1px 5px rgba(0,0,0,.22)}
+.gpin.nl .gtx{display:none}
+.gpin.lf>button{left:auto;right:-10px;flex-direction:row-reverse}
+.gpin>button:hover .gtx,.gpin>button:focus-visible .gtx{display:block}
+.gpin>button:hover .gdot{transform:scale(1.15)}
+.gpin.on{z-index:5}
+.gpin.on .gdot{transform:scale(1.3);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c)}
+.gpin.on .gtx{display:block;background:#15241d;color:#fff}
+.gtip{position:absolute;left:0;top:0;z-index:6;pointer-events:none;padding:5px 9px;border-radius:8px;background:var(--surface);border:1px solid var(--line);font:600 13px/1.2 var(--f-body);box-shadow:var(--shadow);white-space:nowrap}
+.g-search{display:block}
+.g-search input{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:500 14.5px var(--f-body)}
+.gchips{display:flex;flex-wrap:wrap;gap:6px}
+.gchip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.gchip:hover{border-color:var(--accent);color:var(--accent)}
+.g-rk{font:600 11.5px var(--f-mono);color:var(--ink-2);white-space:nowrap}
+.g-note{margin:0;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px dashed var(--line);font-size:14px}
+.g-desc{margin:0;font-size:15px}
+.g-switch{display:flex;flex-wrap:wrap;gap:8px}
+.g-grp{margin-top:4px}
+.g-sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.2)}
+.g-cmp{display:grid;gap:6px}
+.g-cmp-h{display:flex;justify-content:space-between;gap:8px;font:600 11px var(--f-mono);color:var(--ink-2)}
+.g-track{position:relative;height:12px;border-radius:6px;background:var(--bg);border:1px solid var(--line)}
+.g-track i{display:block;height:100%;border-radius:6px;background:var(--leaf)}
+.g-track b{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--ink)}
+.g-hyp{background:linear-gradient(90deg,#5c9e54 0%,#a3c976 18%,#ecdc96 34%,#e8c07c 48%,#d49a5c 64%,#ba7646 80%,#804a34 100%)}
+.g-dep{background:linear-gradient(90deg,#a8d2ec,#68a2d6,#3e7aba)}
+.g-lg{list-style:none;margin:0;padding:0;display:grid;gap:4px;font:500 12px/1.3 var(--f-body)}
+.g-lg li{display:flex;align-items:center;gap:8px}
+.g-lg i{flex:none;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.2)}
+.g-lg i.g-multi{background:linear-gradient(135deg,#f3d39b 0 33%,#c5e2a8 33% 66%,#f4b8ac 66%)}
+.g-lg i.g-line,.g-lg i.g-eq{height:0;border:0;border-top:2px solid var(--ink);border-radius:0}
+.g-lg i.g-eq{border-top-style:dashed;border-top-color:var(--ink-2)}
+.g-src{margin-top:12px}
+@media (max-width:900px){.gstage .legend{position:static;width:auto;border:0;border-top:1px solid var(--line);border-radius:0;padding:12px 16px;background:var(--surface)}}
+/* test */
+.quiz{max-width:920px}
+.qz-start{display:grid;gap:18px}
+.qz-grades{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.qz-grade{display:flex;gap:16px;align-items:center;text-align:left;padding:20px;border-radius:20px;border:2px solid var(--line);background:var(--surface);cursor:pointer;color:var(--ink)}
+.qz-grade:hover{border-color:var(--accent)}
+.qz-grade[aria-checked="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.qz-gnum{flex:none;width:64px;height:64px;border-radius:16px;display:grid;place-items:center;background:var(--ink);color:var(--bg);font:800 28px/1 var(--f-display)}
+.qz-grade[aria-checked="true"] .qz-gnum{background:var(--accent);color:var(--on-accent)}
+.qz-gtx{display:grid;gap:3px}
+.qz-gtx b{font:700 18px/1.2 var(--f-display)}
+.qz-gtx span{color:var(--ink-2);font-size:14px}
+.qz-gtx em{font-style:normal;font:500 12px/1.4 var(--f-mono);color:var(--leaf)}
+.qz-opts-row{display:flex;flex-wrap:wrap;gap:16px 40px;align-items:center;justify-content:space-between;padding:18px 20px;border-radius:18px;border:1px solid var(--line);background:var(--surface)}
+.qz-seg{margin-top:8px}
+.qz-hint{margin:8px 0 0;font-size:13.5px;color:var(--ink-2)}
+.qz-check{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;cursor:pointer}
+.qz-check input{width:18px;height:18px;accent-color:var(--accent)}
+.qz-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,32px);display:grid;grid-template-columns:minmax(0,1fr);gap:18px;scroll-margin-top:16px}
+.qz-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.qz-count{font:600 14px var(--f-mono)}
+.qz-count b{font-size:18px}
+.qz-meta{flex:1;font:500 12.5px var(--f-mono);color:var(--ink-2)}
+.qz-bar{height:6px;border-radius:99px;background:var(--bg);overflow:hidden}
+.qz-bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.qz-dots{display:flex;flex-wrap:wrap;gap:6px}
+.qz-dots button{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--bg);font:600 12px var(--f-mono);cursor:pointer;color:var(--ink-2);padding:0}
+.qz-dots button.done{background:color-mix(in srgb,var(--accent) 18%,var(--bg));border-color:var(--accent);color:var(--ink)}
+.qz-dots button.ok{background:color-mix(in srgb,var(--leaf) 22%,var(--bg));border-color:var(--leaf);color:var(--ink)}
+.qz-dots button.bad{background:color-mix(in srgb,var(--heat) 18%,var(--bg));border-color:var(--heat);color:var(--ink)}
+.qz-dots button.cur{outline:2px solid var(--ink);outline-offset:1px}
+.qz-ctx{margin:0;color:var(--ink-2);font-size:15.5px;padding-left:14px;border-left:3px solid var(--line)}
+.qz-fig{margin:0;display:grid;gap:6px;justify-items:start}
+.qz-zoom{padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;cursor:zoom-in;max-width:100%}
+.qz-zoom img{display:block;max-width:100%;max-height:min(440px,60vh);width:auto;height:auto}
+.qz-fig figcaption{font:500 11.5px var(--f-mono);color:var(--ink-2)}
+.qz-q{font:700 clamp(18px,2vw,22px)/1.3 var(--f-display);outline:none}
+.qz-list{display:grid;gap:8px}
+.qz-opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:11px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);cursor:pointer;font-size:16px;color:var(--ink);transition:border-color .15s,background .15s}
+.qz-opt:hover:not(:disabled){border-color:var(--accent)}
+.qz-opt b{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);font:700 14px var(--f-mono)}
+.qz-opt span{flex:1}
+.qz-opt i{flex:none;font-style:normal;font-weight:800;font-size:18px}
+.qz-opt.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--bg))}
+.qz-opt.sel b{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.qz-opt.right{border-color:var(--leaf);background:color-mix(in srgb,var(--leaf) 14%,var(--bg))}
+.qz-opt.right b{background:var(--leaf);color:var(--bg);border-color:var(--leaf)}
+.qz-opt.right i::before{content:"✓";color:var(--leaf)}
+.qz-opt.wrong{border-color:var(--heat);background:color-mix(in srgb,var(--heat) 12%,var(--bg))}
+.qz-opt.wrong b{background:var(--heat);color:var(--bg);border-color:var(--heat)}
+.qz-opt.wrong i::before{content:"✗";color:var(--heat)}
+.qz-opt:disabled{cursor:default;opacity:1}
+.qz-fb:empty{display:none}
+.qz-fb{display:grid;gap:8px}
+.qz-verdict{margin:0;font-weight:700}
+.qz-verdict.ok{color:var(--leaf)}
+.qz-verdict.bad{color:var(--heat)}
+.qz-ex{margin:0;padding:12px 14px;border-radius:12px;background:var(--bg);border:1px dashed var(--line);font-size:15px}
+.qz-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.qz-result .qz-nav{justify-content:flex-start}
+.qz-score{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.qz-score p{margin:4px 0 0;color:var(--ink-2)}
+.qz-ring{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--leaf) calc(var(--p)*1%),var(--bg) 0);position:relative;flex:none}
+.qz-ring::before{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--surface)}
+.qz-ring b{position:relative;font:800 28px var(--f-display)}
+.qz-big{font:800 clamp(24px,3vw,34px)/1.1 var(--f-display);margin-top:6px;outline:none}
+.qz-rh{margin:8px 0 0;font:700 16px var(--f-display)}
+.qz-review{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.qz-review button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer;color:var(--ink)}
+.qz-review li.bad button{border-left:4px solid var(--heat)}
+.qz-review li.ok button{border-left:4px solid var(--leaf)}
+.qz-rn{flex:none;font:600 12px var(--f-mono);color:var(--ink-2);width:22px;padding-top:2px}
+.qz-rt{flex:1;display:grid;gap:2px;min-width:0}
+.qz-rt b{font-weight:600;font-size:14.5px}
+.qz-rt span{font-size:13px;color:var(--ink-2)}
+.qz-rs{flex:none;font-weight:800}
+.qz-review li.ok .qz-rs{color:var(--leaf)}
+.qz-review li.bad .qz-rs{color:var(--heat)}
+.qz-light{max-width:min(96vw,1400px);max-height:94vh;padding:12px;border:0;border-radius:16px;background:var(--surface);color:var(--ink)}
+.qz-light::backdrop{background:rgba(0,0,0,.72)}
+.qz-light img{display:block;max-width:100%;max-height:calc(94vh - 84px);margin:0 auto 10px;border-radius:8px;background:#fff}
+.qz-light .btn{margin-left:auto;display:flex}
+@media (max-width:640px){.qz-grades{grid-template-columns:1fr}.qz-nav .btn{flex:1 1 auto;justify-content:center}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -433,10 +572,10 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
       <polygon points="16,25.7 29,18.7 29,23 16,30" fill="var(--s3-bg)"/>
       <polygon points="16,17 29,10 29,23 16,30" fill="var(--ink)" opacity=".2"/>
     </svg>
-    <span>Геоэкология<small>зерттеу платформасы</small></span>
+    <span>Geography<small>география платформасы</small></span>
   </a>
   <nav class="tabs" aria-label="Бөлімдер">
-    <a href="#maket" data-view="view-maket">Макет</a><a href="#zertteu" data-view="view-zertteu"><span class="tl">Менің зерттеуім</span><span class="ts">Зерттеу</span></a><a href="#zerthana" data-view="view-zerthana">Зертхана</a><a href="#turaly" data-view="view-turaly"><span class="tl">Платформа туралы</span><span class="ts">Туралы</span></a>
+    <a href="#maket" data-view="view-maket">Макет</a><a href="#zertteu" data-view="view-zertteu"><span class="tl">Менің зерттеуім</span><span class="ts">Зерттеу</span></a><a href="#zerthana" data-view="view-zerthana">Зертхана</a><a href="#karta" data-view="view-karta">Карта</a><a href="#test" data-view="view-test">Тест</a><a href="#turaly" data-view="view-turaly"><span class="tl">Платформа туралы</span><span class="ts">Туралы</span></a>
   </nav>
 </header>
 
@@ -447,7 +586,7 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
     <div class="hero-head">
       <div class="tq">
         <p class="eyebrow">7–11-сыныптарға арналған тұжырымдама</p>
-        <h1 class="hero-title"><span class="l1">Геоэкологиялық</span> <span class="l2">зерттеу платформасы</span></h1>
+        <h1 class="hero-title"><span class="l1">Geography</span> <span class="l2">география және геоэкологиялық зерттеу платформасы</span></h1>
       </div>
       <div class="hero-side">
         <p class="lead">Оқушы жергілікті экологиялық мәселені зерттеуді, нақты деректерді талдауды және дәлелді шешім ұсынуды үйренеді. Нәтижесі карта, инфографика, зерттеу есебі немесе модель түрінде ұсынылады.</p>
@@ -630,6 +769,52 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
 </section>
 </div>
 
+<div class="view" id="view-karta" hidden>
+<section class="band" id="karta">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Карта</p>
+      <h2>Әлемнің интерактив глобусы</h2>
+      <p class="lead">Физикалық, саяси және экономикалық карталарды ауыстырып, глобусты айналдырыңыз. Ел немесе нысан белгісін бассаңыз, ол туралы ақпарат шығады.</p>
+    </div>
+    <div class="stage gstage" id="glbStage">
+      <div class="stage-view" id="glbView">
+        <canvas id="glbCanvas" role="img" aria-label="Жер шарының интерактив глобусы"></canvas>
+        <div class="labels" id="glbLabels"></div>
+        <div class="gtip" id="glbTip" hidden></div>
+        <div class="stage-cap"><strong>Интерактив глобус</strong><span>Сүйреп айналдыр · дөңгелекпен жақындат · нысанды бас</span></div>
+        <div class="toolbar">
+          <div class="seg" role="group" aria-label="Карта түрі" id="glbModes">
+            <button type="button" data-mode="phys" aria-pressed="true">Физикалық</button><button type="button" data-mode="pol" aria-pressed="false">Саяси</button><button type="button" data-mode="eco" aria-pressed="false">Экономикалық</button>
+          </div>
+          <button type="button" class="icon-btn" id="glbZoomIn" aria-label="Жақындату" title="Жақындату"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+          <button type="button" class="icon-btn" id="glbZoomOut" aria-label="Алыстату" title="Алыстату"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+          <button type="button" class="icon-btn" id="glbHome" aria-label="Қазақстанға оралу" title="Қазақстанға оралу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
+        </div>
+        <p class="stage-fallback" id="glbStatus">Глобус ашылады…</p>
+      </div>
+      <div class="legend" id="glbLegend"></div>
+      <aside class="panel" id="glbPanel" aria-live="polite"></aside>
+    </div>
+    <p class="dc-meta g-src">Дереккөздер: Natural Earth (шекаралар, өзендер, көлдер, мұздықтар), Дүниежүзілік банк (халық саны мен ЖІӨ, 2025), world-countries (аумақ, тіл, ақша бірлігі). Даулы аумақтар туралы ескерту ел ақпаратында берілген.</p>
+  </div>
+</section>
+</div>
+
+<div class="view" id="view-test" hidden>
+<section class="band" id="test">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Тест</p>
+      <h2>Білімді тексер</h2>
+      <p class="lead">9 және 11-сыныптарға арналған тест тапсырмалары. Сыныпты және режимді таңдап, тестті бастаңыз. Пернетақтамен де жауап беруге болады: 1–5 немесе A–E, ← → — сұрақтар арасында өту.</p>
+    </div>
+    <div class="quiz" id="quiz"></div>
+  </div>
+</section>
+<dialog class="qz-light" id="qzLight" aria-label="Сурет"><img id="qzLightImg" alt="Тест суреті"><button type="button" class="btn btn-ghost" data-close>Жабу ✕</button></dialog>
+</div>
+
 <div class="view" id="view-turaly" hidden>
 <section class="band" id="turaly">
   <div class="wrap">
@@ -710,10 +895,14 @@ table.calc tr.hot td{background:color-mix(in srgb,var(--accent) 12%,transparent)
 </div>
 </main>
 
-<footer><div class="wrap"><span>Геоэкологиялық зерттеу платформасының тұжырымдамасы · 7–11-сыныптар</span><span>«Геоэкологиялық зерттеулер негіздері» курсы · «География» оқу-әдістемелік құралы</span></div></footer>
+<footer><div class="wrap"><span>«Геоэкологиялық зерттеулер негіздері» курсы · «География» оқу-әдістемелік құралы</span></div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="assets/map-objects.js" defer></script>
+<script src="assets/map.js" defer></script>
+<script src="assets/test-data.js" defer></script>
+<script src="assets/test.js" defer></script>
 <script>
 (function(){
 "use strict";
